@@ -1,0 +1,66 @@
+class Recipe:
+    '''
+    Recipe
+    A class for storing needed information for a single recipe and handling transformations of the recipe.
+    '''
+    def __init__(self, ingredients, cooking_steps):
+        self.ingredients = ingredients
+        self.cooking_steps = cooking_steps
+
+    def transform_healthy(self):
+        '''
+        Transforms the recipe to be more healthy.
+        :return: The transformed recipe.
+        '''
+        print('Transforming to a healthy recipe not implemented yet.')
+        return Recipe(None, None)
+
+    def transform_unhealthy(self):
+        '''
+        Transforms the recipe to be more unhealthy.
+        :return: The transformed recipe.
+        '''
+        print('Transforming to an unhealthy recipe not implemented yet.')
+        return Recipe(None, None)
+
+    def transform_vegetarian(self):
+        '''
+        Transforms the recipe to be vegetarian.
+        :return: The transformed recipe.
+        '''
+        print('Transforming to a vegetarian recipe not implemented yet.')
+        return Recipe(None, None)
+
+    def transform_non_vegetarian(self):
+        '''
+        Transforms the recipe to be non-vegetarian.
+        :return: The transformed recipe.
+        '''
+        print('Transforming to a non-vegetarian recipe not implemented yet.')
+        return Recipe(None, None)
+
+    def transform_Japanese(self):
+        '''
+        Transforms the recipe to be more Japanese.
+        :return: The transformed recipe.
+        '''
+        print('Transforming to a Japanese recipe not implemented yet.')
+        return Recipe(None, None)
+
+
+    def pretty_print(self):
+        '''
+        Prints out the recipe in a nice format.
+        :return: None
+        '''
+
+        print('***************************************************************')
+        print('INGREDIENTS:')
+        print(self.ingredients)
+        print('***************************************************************')
+        print('COOKING STEPS:')
+        print(self.cooking_steps)
+        print('***************************************************************')
+
+        return
+
