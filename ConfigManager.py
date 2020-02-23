@@ -1,3 +1,5 @@
+import pandas as pd
+
 class ConfigManager:
     '''
     Configuration Manager
@@ -7,3 +9,6 @@ class ConfigManager:
     '''
     def __init__(self):
         pass
+
+    def load_csv(self, csv_path):
+        return pd.read_csv(csv_path)

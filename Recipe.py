@@ -1,3 +1,5 @@
+import copy
+
 class Recipe:
     '''
     Recipe
@@ -28,6 +30,17 @@ class Recipe:
         Transforms the recipe to be vegetarian.
         :return: The transformed recipe.
         '''
+        # Create deep copies of the Ingredient and CookingStep lists
+        new_ingredients = copy.deepcopy(self.ingredients)
+        new_cooking_steps = copy.deepcopy(self.cooking_steps)
+
+        # Identify all meat ingredients
+
+
+        # For each of the meat ingredients:
+            # Find the appropriate vegetarian substitution
+            # Replace each reference to this meat with the replacement in the CookingSteps and Ingredient lists
+
         print('Transforming to a vegetarian recipe not implemented yet.')
         return Recipe(None, None)
 
