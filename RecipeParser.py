@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from CookingStep import CookingStep
 from fractions import Fraction
 from Ingredient import Ingredient
 import re
@@ -40,7 +41,7 @@ def get_recipe(url):
                 elif token.pos_ in ['NUM', 'NOUN', 'PRON', 'PROPN']:
                     ingredient_name.append(token.string.strip())
                 elif token.pos_ == 'VERB':
-                    preparation.append(token.string.strip())
+                    preparation.append(token.lemma_)
                 elif token.pos_ in 'ADJ':
                     descriptor.append(token.string.strip())
 
@@ -51,8 +52,14 @@ def get_recipe(url):
         for big_step in html_steps:
             if big_step.contents:
                 for step in big_step.contents[0].split('. '):
-                    steps.append(step)
-                steps[-1] = steps[-1].strip().rstrip('.')
+                    step_ingredients = []
+                    for ing in ingredients:
+                        for ing_part in ing.name.split():
+                            if ing_part in step:
+                                step_ingredients.append(ing.name)
+                                break
+                    steps.append(CookingStep(ingredients=step_ingredients, text=step))
+                steps[-1].text = steps[-1].text.strip().rstrip('.')
 
         return Recipe(ingredients, steps)
   # except:
@@ -61,8 +68,8 @@ def get_recipe(url):
 
 # print(get_recipe('https://www.allrecipes.com/recipe/269592/pork-chops-in-garlic-mushroom-sauce/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
 # print('')
-print(get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
-print('')
-print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
-print('')
+# print(get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print('')
+# print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print('')
 print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
