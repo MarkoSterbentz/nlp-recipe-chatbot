@@ -8,10 +8,11 @@ class Ingredient:
     descriptor: any extra description of the ingredient (e.g. fresh, extra-virgin, etc.)
     preparation: any extra description of how the ingredient is prepared (e.g. finely chopped, minced, etc.)
     '''
-    def __init__(self, name, quantity, measurement_unit, descriptor, preparation):
+    def __init__(self, name='', quantity=None, measurement_unit='', descriptor=[], preparation=[], text=''):
         self.name = name
         self.quantity = quantity
         self.measurement_unit = measurement_unit
         self.descriptor = descriptor
         self.preparation = preparation
+        self.text = text
 
