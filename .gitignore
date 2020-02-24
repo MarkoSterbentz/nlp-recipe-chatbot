@@ -1,0 +1,9 @@
+.idea/
+*.swp
+__pycache__/*
+*.pyc
+*.pyo
+*.orig
+.vscode/
+__MACOSX/
+.DS_Store
