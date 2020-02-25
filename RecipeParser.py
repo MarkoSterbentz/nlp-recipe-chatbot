@@ -8,7 +8,7 @@ from Recipe import Recipe
 import requests
 import spacy
 
-with open('measurement_units.csv', 'r') as f:
+with open('configs/measurement_units.csv', 'r') as f:
     measurement_units = [line.strip() for line in f.readlines()]
 
 def string_to_decimal(string_number):
@@ -139,4 +139,4 @@ def get_mexican_recipes(limit=100):
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
 # print('')
-print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())

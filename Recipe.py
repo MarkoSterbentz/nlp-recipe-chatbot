@@ -69,10 +69,12 @@ class Recipe:
 
         print('***************************************************************')
         print('INGREDIENTS:')
-        print(self.ingredients)
+        for ing in self.ingredients:
+            ing.pretty_print()
         print('***************************************************************')
         print('COOKING STEPS:')
-        print(self.cooking_steps)
+        for step in self.cooking_steps:
+            step.pretty_print()
         print('***************************************************************')
 
         return

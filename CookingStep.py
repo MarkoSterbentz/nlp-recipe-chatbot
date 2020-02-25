@@ -20,5 +20,9 @@ class CookingStep:
         pass
 
     def pretty_print(self):
-        pass
+        '''
+        Prints out the cooking step as a nicely formatted string.
+        :return: None
+        '''
+        print('    ' + self.text)
 

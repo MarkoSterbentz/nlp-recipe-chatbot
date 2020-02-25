@@ -16,3 +16,9 @@ class Ingredient:
         self.preparation = preparation
         self.text = text
 
+    def pretty_print(self):
+        '''
+        Prints out the ingredient as a nicely formatted string.
+        :return: None
+        '''
+        print('    ' + self.text)
