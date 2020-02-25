@@ -16,3 +16,19 @@ class Ingredient:
         self.preparation = preparation
         self.text = text
 
+    def __str__(self):
+        ret_val = ''
+        if self.quantity > 0:
+            ret_val += str(self.quantity) + ' '
+        if not self.measurement_unit == '':
+            ret_val += self.measurement_unit
+            if self.quantity != 1.0:
+                ret_val += 's'
+            ret_val += ' '
+        if len(self.descriptor) > 0:
+            ret_val += ' '.join(self.descriptor) + ' '
+        ret_val += self.name
+        if len(self.preparation) > 0:
+            ret_val+= ', ' + ', '.join(self.preparation)
+        return ret_val
+

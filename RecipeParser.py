@@ -20,7 +20,7 @@ def string_to_decimal(string_number):
 
 
 def get_recipe(url):
-    try:
+    #try:
         nlp = spacy.load("en_core_web_sm")
         recipe_page = BeautifulSoup(requests.get(url).content, 'html.parser')
 
@@ -33,16 +33,22 @@ def get_recipe(url):
             ingredient_name = []
             descriptor = []
             preparation = []
+            unit_specifier = re.search('(\(.*\)) *(.*)', groups.group(2))
             unit = ''
+            if unit_specifier is not None:
+                unit += unit_specifier.group(1)
+                tokens = nlp(unit_specifier.group(2))
+            else:
+                tokens = nlp(groups.group(2))
 
-            tokens = nlp(groups.group(2))
             for token in tokens:
                 if token.i == 0 and token.lemma_ in measurement_units:
-                    unit = token.lemma_
+                    unit += ' ' + token.lemma_
+                    unit = unit.lstrip()
                 elif token.pos_ in ['NUM', 'NOUN', 'PRON', 'PROPN']:
                     ingredient_name.append(token.string.strip())
                 elif token.pos_ == 'VERB':
-                    preparation.append(token.lemma_)
+                    preparation.append(token.string.strip())
                 elif token.pos_ in 'ADJ':
                     descriptor.append(token.string.strip())
 
@@ -54,16 +60,24 @@ def get_recipe(url):
             if big_step.contents:
                 for step in big_step.contents[0].split('. '):
                     step_ingredients = []
+                    ing_num = 0
                     for ing in ingredients:
-                        for ing_part in ing.name.split():
-                            if ing_part in step:
-                                step_ingredients.append(ing.name)
-                                break
+                        if ing.name in step:
+                            step_ingredients.append(ing.name)
+                            step = step.replace(ing.name, '{' + str(ing_num) + '}')
+                            ing_num += 1
+                        else:
+                            for ing_part in ing.name.split():
+                                if ing_part in step:
+                                    step_ingredients.append(ing.name)
+                                    step = step.replace(ing_part, '{' + str(ing_num) + '}')
+                                    ing_num += 1
+                                    break
                     steps.append(CookingStep(ingredients=step_ingredients, text=step))
                 steps[-1].text = steps[-1].text.strip().rstrip('.')
 
         return Recipe(ingredients, steps)
-    except:
+    #except:
         print('Unable to build recipe object from url.')
         return None
 
@@ -133,10 +147,10 @@ def get_mexican_recipes(limit=100):
     return get_cuisine_recipe_urls(base_url, output_file)
 
 
-# print(get_recipe('https://www.allrecipes.com/recipe/269592/pork-chops-in-garlic-mushroom-sauce/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print(get_recipe('https://www.allrecipes.com/recipe/269592/pork-chops-in-garlic-mushroom-sauce/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-# print(get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+print(get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-# print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage').pretty_print())
+# print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))

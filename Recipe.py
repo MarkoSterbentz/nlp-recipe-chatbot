@@ -61,19 +61,19 @@ class Recipe:
         return Recipe(None, None)
 
 
-    def pretty_print(self):
+    def __str__(self):
         '''
         Prints out the recipe in a nice format.
         :return: None
         '''
+        ret_val = ''
+        ret_val += '***************************************************************\n'
+        ret_val += 'INGREDIENTS:\n'
+        ret_val += '\n'.join([str(ingredient) for ingredient in self.ingredients]) + '\n'
+        ret_val += '*************\n**************************************************'
+        ret_val += 'COOKING STEPS:\n'
+        ret_val += '\n'.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
+        ret_val += '***************************************************************\n'
 
-        print('***************************************************************')
-        print('INGREDIENTS:')
-        print(self.ingredients)
-        print('***************************************************************')
-        print('COOKING STEPS:')
-        print(self.cooking_steps)
-        print('***************************************************************')
-
-        return
+        return ret_val
 

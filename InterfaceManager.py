@@ -33,7 +33,7 @@ class InterfaceManager:
         current_recipe = original_recipe
 
         # Print out the recipe that was found
-        current_recipe.pretty_print()
+        print(current_recipe)
 
         # Start the main user input loop
         terminate = False

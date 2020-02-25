@@ -14,11 +14,10 @@ class CookingStep:
         self.time_quantity = time_quantity
         self.time_unit = time_unit
         self.text = text
-        pass
 
     def change_cooking_method(self):
         pass
 
-    def pretty_print(self):
-        pass
+    def __str__(self):
+        return self.text.format(*self.ingredients)
 
