@@ -31,6 +31,7 @@ class InterfaceManager:
 
         # Store the current recipe to be transformed by the next user input
         current_recipe = original_recipe
+        substitutions_performed = {}
 
         # Print out the recipe that was found
         print(current_recipe)
@@ -46,15 +47,15 @@ class InterfaceManager:
 
             # Perform the action
             if selected_option == '0':
-                current_recipe = current_recipe.transform_healthy()
+                current_recipe, substitutions_performed = current_recipe.transform_healthy()
             elif selected_option == '1':
-                current_recipe = current_recipe.transform_unhealthy()
+                current_recipe, substitutions_performed = current_recipe.transform_unhealthy()
             elif selected_option == '2':
-                current_recipe = current_recipe.transform_vegetarian()
+                current_recipe, substitutions_performed = current_recipe.transform_vegetarian()
             elif selected_option == '3':
-                current_recipe = current_recipe.transform_non_vegetarian()
+                current_recipe, substitutions_performed = current_recipe.transform_non_vegetarian()
             elif selected_option == '4':
-                current_recipe = current_recipe.transform_Japanese()
+                current_recipe, substitutions_performed = current_recipe.transform_Japanese()
             elif selected_option == '5':
                 terminate = True
             else:

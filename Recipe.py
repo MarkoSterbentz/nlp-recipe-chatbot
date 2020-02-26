@@ -1,4 +1,6 @@
 import copy
+from substitutions import SUB
+import random
 
 class Recipe:
     '''
@@ -12,53 +14,140 @@ class Recipe:
     def transform_healthy(self):
         '''
         Transforms the recipe to be more healthy.
-        :return: The transformed recipe.
+        :return: The transformed recipe. A dictionary mapping original ingredients to their substitution/scaled version.
         '''
-        print('Transforming to a healthy recipe not implemented yet.')
-        return Recipe(None, None)
+
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+
+        # Init dictionary of substitutions that are actually performed by the transformation
+        actual_substitutions = {}
+
+        for orig_ing in self.ingredients:
+            if orig_ing.name in SUB['to_healthy']:
+
+                # Pick a new ingredient to substitute in
+                new_ing_name = random.choice(SUB['to_healthy'][orig_ing.name])
+
+                # Perform the ingredient substitution
+                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+
+                # make a note of which ingredient was substituted for what (so we can report that to the user)
+                actual_substitutions[orig_ing.name] = new_ing_name
+
+        # If no whole ingredient substitutions were made, half the amount of condiments or unhealthy spices/herbs
+        if len(actual_substitutions) == 0:
+            # TODO: Implement a way to find unhealthy spices/herbs in the recipe and half the amount of them
+            pass
+
+        return transformed_recipe, actual_substitutions
 
     def transform_unhealthy(self):
         '''
         Transforms the recipe to be more unhealthy.
         :return: The transformed recipe.
         '''
-        print('Transforming to an unhealthy recipe not implemented yet.')
-        return Recipe(None, None)
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+
+        # Init dictionary of substitutions that are actually performed by the transformation
+        actual_substitutions = {}
+
+        for orig_ing in self.ingredients:
+            if orig_ing.name in SUB['to_unhealthy']:
+
+                # Pick a new ingredient to substitute in
+                new_ing_name = random.choice(SUB['to_unhealthy'][orig_ing.name])
+
+                # Perform the ingredient substitution
+                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+
+                # make a note of which ingredient was substituted for what (so we can report that to the user)
+                actual_substitutions[orig_ing.name] = new_ing_name
+
+        # If no whole ingredient substitutions were made, half the amount of condiments or unhealthy spices/herbs
+        if len(actual_substitutions) == 0:
+            # TODO: Implement a way to find unhealthy spices/herbs in the recipe and double the amount of them
+            pass
+
+        return transformed_recipe, actual_substitutions
 
     def transform_vegetarian(self):
         '''
         Transforms the recipe to be vegetarian.
         :return: The transformed recipe.
         '''
-        # Create deep copies of the Ingredient and CookingStep lists
-        new_ingredients = copy.deepcopy(self.ingredients)
-        new_cooking_steps = copy.deepcopy(self.cooking_steps)
 
-        # Identify all meat ingredients
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
 
+        # Init dictionary of substitutions that are actually performed by the transformation
+        actual_substitutions = {}
 
-        # For each of the meat ingredients:
-            # Find the appropriate vegetarian substitution
-            # Replace each reference to this meat with the replacement in the CookingSteps and Ingredient lists
+        for orig_ing in self.ingredients:
+            if orig_ing.name in SUB['to_vegetarian']:
 
-        print('Transforming to a vegetarian recipe not implemented yet.')
-        return Recipe(None, None)
+                # Pick a new ingredient to substitute in
+                new_ing_name = random.choice(SUB['to_vegetarian'][orig_ing.name])
+
+                # Perform the ingredient substitution
+                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+
+                # make a note of which ingredient was substituted for what (so we can report that to the user)
+                actual_substitutions[orig_ing.name] = new_ing_name
+
+        return transformed_recipe, actual_substitutions
+
 
     def transform_non_vegetarian(self):
         '''
         Transforms the recipe to be non-vegetarian.
         :return: The transformed recipe.
         '''
-        print('Transforming to a non-vegetarian recipe not implemented yet.')
-        return Recipe(None, None)
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+
+        # Init dictionary of substitutions that are actually performed by the transformation
+        actual_substitutions = {}
+
+        for orig_ing in self.ingredients:
+            if orig_ing.name in SUB['to_non_vegetarian']:
+
+                # Pick a new ingredient to substitute in
+                new_ing_name = random.choice(SUB['to_non_vegetarian'][orig_ing.name])
+
+                # Perform the ingredient substitution
+                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+
+                # make a note of which ingredient was substituted for what (so we can report that to the user)
+                actual_substitutions[orig_ing.name] = new_ing_name
+
+        return transformed_recipe, actual_substitutions
 
     def transform_Japanese(self):
         '''
         Transforms the recipe to be more Japanese.
         :return: The transformed recipe.
         '''
-        print('Transforming to a Japanese recipe not implemented yet.')
-        return Recipe(None, None)
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+
+        # Init dictionary of substitutions that are actually performed by the transformation
+        actual_substitutions = {}
+
+        for orig_ing in self.ingredients:
+            if orig_ing.name in SUB['japan']:
+
+                # Pick a new ingredient to substitute in
+                new_ing_name = random.choice(SUB['japan'][orig_ing.name])
+
+                # Perform the ingredient substitution
+                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+
+                # make a note of which ingredient was substituted for what (so we can report that to the user)
+                actual_substitutions[orig_ing.name] = new_ing_name
+
+        return transformed_recipe, actual_substitutions
 
 
     def __str__(self):
@@ -77,11 +166,12 @@ class Recipe:
 
         return ret_val
 
-    def substitute_ingredients(self, old_ing, new_ing):
+    def substitute_ingredients(self, old_ing, new_ing_name):
         '''
         Substitutes out the old ingredient for the new ingredient in both the ingredient list and the cooking steps.
         :param old_ing: The old ingredient to substitute out of the recipe.
-        :param new_ing: The new ingredient to add to the recipe .
+        :param new_ing_name: The name new ingredient to add to the recipe .
         :return: None
         '''
+        # TODO: Implement this function
         pass
