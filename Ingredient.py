@@ -35,4 +35,12 @@ class Ingredient:
         if len(self.preparation) > 0:
             ret_val+= ', ' + ', '.join(self.preparation)
         return ret_val
+      
 
+    def scale(self, scale_factor):
+        '''
+        Scale the quantity of the ingredient.
+        :param scale_factor: The amount to scale the ingredient by
+        :return: None
+        '''
+        self.quantity = scale_factor * self.quantity
