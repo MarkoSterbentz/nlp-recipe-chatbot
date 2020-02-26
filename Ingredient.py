@@ -16,12 +16,26 @@ class Ingredient:
         self.preparation = preparation
         self.text = text
 
-    def pretty_print(self):
+    def __str__(self):
         '''
         Prints out the ingredient as a nicely formatted string.
         :return: None
         '''
-        print('    ' + self.text)
+        ret_val = ''
+        if self.quantity > 0:
+            ret_val += str(self.quantity) + ' '
+        if not self.measurement_unit == '':
+            ret_val += self.measurement_unit
+            if self.quantity != 1.0:
+                ret_val += 's'
+            ret_val += ' '
+        if len(self.descriptor) > 0:
+            ret_val += ' '.join(self.descriptor) + ' '
+        ret_val += self.name
+        if len(self.preparation) > 0:
+            ret_val+= ', ' + ', '.join(self.preparation)
+        return ret_val
+      
 
     def scale(self, scale_factor):
         '''

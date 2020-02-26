@@ -14,15 +14,14 @@ class CookingStep:
         self.time_quantity = time_quantity
         self.time_unit = time_unit
         self.text = text
-        pass
 
     def change_cooking_method(self):
         pass
 
-    def pretty_print(self):
+    def __str__(self):
         '''
         Prints out the cooking step as a nicely formatted string.
         :return: None
         '''
-        print('    ' + self.text)
+        return self.text.format(*self.ingredients)
 
