@@ -17,6 +17,10 @@ class Ingredient:
         self.text = text
 
     def __str__(self):
+        '''
+        Prints out the ingredient as a nicely formatted string.
+        :return: None
+        '''
         ret_val = ''
         if self.quantity > 0:
             ret_val += str(self.quantity) + ' '

@@ -19,5 +19,9 @@ class CookingStep:
         pass
 
     def __str__(self):
+        '''
+        Prints out the cooking step as a nicely formatted string.
+        :return: None
+        '''
         return self.text.format(*self.ingredients)
 

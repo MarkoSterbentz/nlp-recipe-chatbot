@@ -70,7 +70,7 @@ class Recipe:
         ret_val += '***************************************************************\n'
         ret_val += 'INGREDIENTS:\n'
         ret_val += '\n'.join([str(ingredient) for ingredient in self.ingredients]) + '\n'
-        ret_val += '*************\n**************************************************'
+        ret_val += '***************************************************************'
         ret_val += 'COOKING STEPS:\n'
         ret_val += '\n'.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
         ret_val += '***************************************************************\n'

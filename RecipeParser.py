@@ -8,7 +8,7 @@ from Recipe import Recipe
 import requests
 import spacy
 
-with open('measurement_units.csv', 'r') as f:
+with open('configs/measurement_units.csv', 'r') as f:
     measurement_units = [line.strip() for line in f.readlines()]
 
 def string_to_decimal(string_number):
@@ -20,7 +20,7 @@ def string_to_decimal(string_number):
 
 
 def get_recipe(url):
-    #try:
+    try:
         nlp = spacy.load("en_core_web_sm")
         recipe_page = BeautifulSoup(requests.get(url).content, 'html.parser')
 
@@ -77,7 +77,7 @@ def get_recipe(url):
                 steps[-1].text = steps[-1].text.strip().rstrip('.')
 
         return Recipe(ingredients, steps)
-    #except:
+    except:
         print('Unable to build recipe object from url.')
         return None
 
@@ -154,3 +154,4 @@ print(get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bow
 # print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))
+
