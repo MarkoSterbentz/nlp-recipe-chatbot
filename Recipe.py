@@ -79,3 +79,11 @@ class Recipe:
 
         return
 
+    def substitute_ingredients(self, old_ing, new_ing):
+        '''
+        Substitutes out the old ingredient for the new ingredient in both the ingredient list and the cooking steps.
+        :param old_ing: The old ingredient to substitute out of the recipe.
+        :param new_ing: The new ingredient to add to the recipe .
+        :return: None
+        '''
+        pass

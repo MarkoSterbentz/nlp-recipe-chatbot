@@ -11,6 +11,7 @@ def main():
 
     manager = cm.ConfigManager()
     manager.create_substitution_dictionaries()
+    # manager.load_ingredient_dictionary()
 
 if __name__ == "__main__":
     main()
