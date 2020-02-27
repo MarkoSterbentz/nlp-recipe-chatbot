@@ -152,8 +152,7 @@ class Recipe:
 
     def __str__(self):
         '''
-        Prints out the recipe in a nice format.
-        :return: None
+        :return: The recipe in a nice format.
         '''
         ret_val = ''
         ret_val += '***************************************************************\n'
@@ -173,5 +172,9 @@ class Recipe:
         :param new_ing_name: The name new ingredient to add to the recipe .
         :return: None
         '''
-        # TODO: Implement this function
-        pass
+        for i in range(len(self.ingredients)):
+            if self.ingredients[i].name == old_ing:
+                self.ingredients[i].name = new_ing_name
+                self.ingredients[i].descriptor = []
+        return
+
