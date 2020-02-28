@@ -25,7 +25,7 @@ class Ingredient:
             ret_val += str(self.quantity) + ' '
         if not self.measurement_unit == '':
             ret_val += self.measurement_unit
-            if self.quantity != 1.0:
+            if self.quantity != 1.0 and self.measurement_unit[-1] != 's':
                 ret_val += 's'
             ret_val += ' '
         if len(self.descriptor) > 0:

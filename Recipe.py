@@ -176,11 +176,14 @@ class Recipe:
         :return: None
         '''
         # TODO: Make sure the ingredient isn't already a part of the recipe
-        # TODO: Substitute in the ingredient within the cooking steps as well.
 
         for i in range(len(self.ingredients)):
             if self.ingredients[i].name == old_ing.name:
                 self.ingredients[i].name = new_ing_name
                 self.ingredients[i].descriptor = []
+        for i in range(len(self.cooking_steps)):
+            for j in range(len(self.cooking_steps[i].ingredients)):
+                if self.cooking_steps[i].ingredients[j] == old_ing.name:
+                    self.cooking_steps[i].ingredients[j] = new_ing_name
         return
 
