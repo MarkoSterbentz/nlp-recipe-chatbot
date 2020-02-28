@@ -151,6 +151,22 @@ class Recipe:
         return transformed_recipe, actual_substitutions
 
 
+    def transform_size(self, scale):
+        '''
+        Transforms the recipe to be larger or smaller based on the scale factor given.
+        :param scale: The factor by which to scale the recipe.
+        :return: The transformed recipe.
+        '''
+        # Make a copy of the current recipe
+        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+
+        # Scale each ingredient quantity by the specified amount
+        for ing in transformed_recipe.ingredients:
+            ing.scale(scale)
+
+        return transformed_recipe
+
+
     def __str__(self):
         '''
         :return: The recipe in a nice format.
