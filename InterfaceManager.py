@@ -68,14 +68,19 @@ class InterfaceManager:
                 print(current_recipe.__str__())
                 self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '4':
-                current_recipe, substitutions_performed = current_recipe.transform_Japanese()
+                current_recipe, substitutions_performed = current_recipe.transform_cuisine('japan')
                 print("\nThe new, more Japanese version of the recipe is below: \n".upper())
                 print(current_recipe.__str__())
                 self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '5':
+                current_recipe, substitutions_performed = current_recipe.transform_cuisine('mexico')
+                print("\nThe new, more Mexican version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
+            elif selected_option == '6':
                 terminate = True
             else:
-                print('Invalid input. Please input a number between 0 and 5.')
+                print('Invalid input. Please input a number between 0 and 6.')
 
         print('Thank you for using our recipe transformer!')
 
@@ -94,7 +99,8 @@ class InterfaceManager:
         print('[2]: Make recipe vegetarian')
         print('[3]: Make recipe non-vegetarian')
         print('[4]: Make recipe Japanese')
-        print('[5]: End session')
+        print('[5]: Make recipe Mexican')
+        print('[6]: End session')
         print('***************************************************************\n')
         return
 
@@ -106,6 +112,6 @@ class InterfaceManager:
         '''
         print('\n***************************************************************')
         print('SUBSTITUTIONS PERFORMED')
-        print('\n***************************************************************')
+        print('***************************************************************')
         for key, value in subs.items():
-            print(key + '->' + value)
+            print(key + ' -> ' + value)

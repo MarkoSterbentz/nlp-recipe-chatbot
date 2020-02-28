@@ -9,9 +9,9 @@ def main():
     # Run the user interface on a loop
     interface.start_interaction_loop()
 
+    # Run the following to regenerate the substitution dictionaries
     # manager = cm.ConfigManager()
     # manager.create_substitution_dictionaries()
-    # manager.load_ingredient_dictionary()
 
 if __name__ == "__main__":
     main()

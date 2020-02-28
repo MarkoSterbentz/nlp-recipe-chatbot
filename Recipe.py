@@ -124,9 +124,10 @@ class Recipe:
 
         return transformed_recipe, actual_substitutions
 
-    def transform_Japanese(self):
+    def transform_cuisine(self, cuisine_name):
         '''
-        Transforms the recipe to be more Japanese.
+        Transforms the recipe to be more like the cuisine type given.
+        :param cuisine_name: The name of the cuisine to transform to. Valid names: {mexico, japan}
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
@@ -136,10 +137,10 @@ class Recipe:
         actual_substitutions = {}
 
         for orig_ing in self.ingredients:
-            if orig_ing.name in SUB['japan']:
+            if orig_ing.name in SUB[cuisine_name]:
 
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB['japan'][orig_ing.name])
+                new_ing_name = random.choice(SUB[cuisine_name][orig_ing.name])
 
                 # Perform the ingredient substitution
                 transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
@@ -161,9 +162,9 @@ class Recipe:
         ret_val += '\n    '.join([str(ingredient) for ingredient in self.ingredients]) + '\n'
         ret_val += '\n***************************************************************\n'
         ret_val += 'COOKING STEPS:\n'
-        ret_val += '***************************************************************\n    '
-        ret_val += '\n    '.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
-        ret_val += '***************************************************************\n'
+        ret_val += '***************************************************************\n    - '
+        ret_val += '\n    - '.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
+        ret_val += '\n***************************************************************\n'
 
         return ret_val
 
@@ -174,8 +175,11 @@ class Recipe:
         :param new_ing_name: The name new ingredient to add to the recipe .
         :return: None
         '''
+        # TODO: Make sure the ingredient isn't already a part of the recipe
+        # TODO: Substitute in the ingredient within the cooking steps as well.
+
         for i in range(len(self.ingredients)):
-            if self.ingredients[i].name == old_ing:
+            if self.ingredients[i].name == old_ing.name:
                 self.ingredients[i].name = new_ing_name
                 self.ingredients[i].descriptor = []
         return
