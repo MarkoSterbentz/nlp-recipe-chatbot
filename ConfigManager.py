@@ -3,7 +3,7 @@ import os
 import pprint
 
 # IMPORTANT: SUBSTITUTION DICTIONARY INFORMATION and OFFICIAL CUISINE TYPE / COUNTRY NAMES
-cuisine_types = ['japan', 'mexico']
+cuisine_types = ['japan', 'mexico', 'italy']
 substitution_dictionary_name = 'SUB'
 ingredient_type_props_filepath = 'configs/ingredient_type_properties.csv'
 standard_transform_col_names = ['to_vegetarian','to_non_vegetarian','to_healthy','to_unhealthy']
