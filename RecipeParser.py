@@ -149,13 +149,13 @@ def get_mexican_recipes(limit=100):
 
 # print(get_recipe('https://www.allrecipes.com/recipe/269592/pork-chops-in-garlic-mushroom-sauce/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-noodle_recipe = get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage')
-print(noodle_recipe)
-old_ingredients = ['white vinegar', 'lettuce', 'carrots']
-new_ingredients = ['red wine vinegar', 'spinach', 'beets']
-for i in range(len(old_ingredients)):
-    noodle_recipe.substitute_ingredients(old_ingredients[i], new_ingredients[i])
-print(noodle_recipe)
+# noodle_recipe = get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage')
+# print(noodle_recipe)
+# old_ingredients = ['white vinegar', 'lettuce', 'carrots']
+# new_ingredients = ['red wine vinegar', 'spinach', 'beets']
+# for i in range(len(old_ingredients)):
+#     noodle_recipe.substitute_ingredients(old_ingredients[i], new_ingredients[i])
+# print(noodle_recipe)
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')

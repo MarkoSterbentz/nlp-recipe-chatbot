@@ -34,6 +34,7 @@ class InterfaceManager:
         substitutions_performed = {}
 
         # Print out the recipe that was found
+        print('\nFound the following recipe:\n')
         print(current_recipe)
 
         # Start the main user input loop
@@ -48,14 +49,29 @@ class InterfaceManager:
             # Perform the action
             if selected_option == '0':
                 current_recipe, substitutions_performed = current_recipe.transform_healthy()
+                print("\nThe new, more healthy recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '1':
                 current_recipe, substitutions_performed = current_recipe.transform_unhealthy()
+                print("\nThe new, less healthy recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '2':
                 current_recipe, substitutions_performed = current_recipe.transform_vegetarian()
+                print("\nThe new, vegetarian version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '3':
                 current_recipe, substitutions_performed = current_recipe.transform_non_vegetarian()
+                print("\nThe new, non-vegetarian version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '4':
                 current_recipe, substitutions_performed = current_recipe.transform_Japanese()
+                print("\nThe new, more Japanese version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '5':
                 terminate = True
             else:
@@ -81,3 +97,15 @@ class InterfaceManager:
         print('[5]: End session')
         print('***************************************************************\n')
         return
+
+    def __print_substitutions_performed(self, subs):
+        '''
+        Nicely prints out the substitution dictionary.
+        :param subs: A dictionary mapping the name of the original ingredient to the name of the new ingredient.
+        :return: None
+        '''
+        print('\n***************************************************************')
+        print('SUBSTITUTIONS PERFORMED')
+        print('\n***************************************************************')
+        for key, value in subs.items():
+            print(key + '->' + value)
