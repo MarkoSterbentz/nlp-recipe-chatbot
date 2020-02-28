@@ -33,7 +33,7 @@ def get_recipe(url):
             ingredient_name = []
             descriptor = []
             preparation = []
-            unit_specifier = re.search('(\(.*\)) *(.*)', groups.group(2))
+            unit_specifier = re.search('(\(.*\) \w+) *(.*)', groups.group(2))
             unit = ''
             if unit_specifier is not None:
                 unit += unit_specifier.group(1)
@@ -152,12 +152,18 @@ def get_mexican_recipes(limit=100):
 # noodle_recipe = get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage')
 # print(noodle_recipe)
 # old_ingredients = ['white vinegar', 'lettuce', 'carrots']
+# old_ingredient_objects = []
+# for ing in noodle_recipe.ingredients:
+#     if ing.name in old_ingredients:
+#         old_ingredient_objects.append(copy.deepcopy(ing))
 # new_ingredients = ['red wine vinegar', 'spinach', 'beets']
-# for i in range(len(old_ingredients)):
-#     noodle_recipe.substitute_ingredients(old_ingredients[i], new_ingredients[i])
+# for i in range(len(old_ingredient_objects)):
+#     noodle_recipe.substitute_ingredients(old_ingredient_objects[i], new_ingredients[i])
 # print(noodle_recipe)
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/57354/beef-pho/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))
+# print('')
+# print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
 
