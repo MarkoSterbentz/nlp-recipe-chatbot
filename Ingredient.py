@@ -18,8 +18,7 @@ class Ingredient:
 
     def __str__(self):
         '''
-        Prints out the ingredient as a nicely formatted string.
-        :return: None
+        :return: The ingredient as a nicely formatted string.
         '''
         ret_val = ''
         if self.quantity > 0:
@@ -35,7 +34,7 @@ class Ingredient:
         if len(self.preparation) > 0:
             ret_val+= ', ' + ', '.join(self.preparation)
         return ret_val
-      
+
 
     def scale(self, scale_factor):
         '''

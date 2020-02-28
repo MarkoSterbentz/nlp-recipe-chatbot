@@ -20,8 +20,7 @@ class CookingStep:
 
     def __str__(self):
         '''
-        Prints out the cooking step as a nicely formatted string.
-        :return: None
+        :return: The cooking step as a nicely formatted string.
         '''
         return self.text.format(*self.ingredients)
 
