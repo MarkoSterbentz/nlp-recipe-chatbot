@@ -7,9 +7,11 @@ class Recipe:
     Recipe
     A class for storing needed information for a single recipe and handling transformations of the recipe.
     '''
-    def __init__(self, ingredients, cooking_steps):
+    def __init__(self, ingredients, cooking_steps, tools, methods):
         self.ingredients = ingredients
         self.cooking_steps = cooking_steps
+        self.tools = tools
+        self.methods = methods
 
     def transform_healthy(self):
         '''

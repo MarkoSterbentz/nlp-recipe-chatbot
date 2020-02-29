@@ -10,6 +10,10 @@ import spacy
 
 with open('configs/measurement_units.csv', 'r') as f:
     measurement_units = [line.strip() for line in f.readlines()]
+with open('configs/tools.txt', 'r') as f:
+    tool_list = [line.strip() for line in f.readlines()]
+with open('configs/methods.txt', 'r') as f:
+    method_list = [line.strip() for line in f.readlines()]
 
 def string_to_decimal(string_number):
     try:
@@ -23,6 +27,9 @@ def get_recipe(url):
     try:
         nlp = spacy.load("en_core_web_sm")
         recipe_page = BeautifulSoup(requests.get(url).content, 'html.parser')
+
+        tools = []
+        methods = []
 
         ingredients = []
         html_ingredients = recipe_page.find_all(attrs={'itemprop': 'recipeIngredient', 'data-nameid': re.compile('^[^0]')})
@@ -52,6 +59,16 @@ def get_recipe(url):
                 elif token.pos_ in 'ADJ':
                     descriptor.append(token.string.strip())
 
+            # Check cooking tools
+            for tool in tool_list:
+                if tool in text and method not in tools:
+                    tools.append(tool)
+
+            # Check cooking methods
+            for method in method_list:
+                if method in text and method not in methods:
+                    methods.append(method)
+
             ingredients.append(Ingredient(' '.join(ingredient_name), quantity, unit, descriptor, preparation, text))
 
         steps = []
@@ -76,7 +93,17 @@ def get_recipe(url):
                     steps.append(CookingStep(ingredients=step_ingredients, text=step))
                 steps[-1].text = steps[-1].text.strip().rstrip('.')
 
-        return Recipe(ingredients, steps)
+                # Check cooking tools
+                for tool in tool_list:
+                    if tool in big_step.contents[0] and tool not in tools:
+                        tools.append(tool)
+
+                # Check cooking methods
+                for method in method_list:
+                    if method in big_step.contents[0] and method not in methods:
+                        methods.append(method)
+
+        return Recipe(ingredients, steps, tools, methods)
     except:
         print('Unable to build recipe object from url.')
         return None
@@ -165,5 +192,5 @@ def get_mexican_recipes(limit=100):
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-# print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
+print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
 
