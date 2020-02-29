@@ -78,6 +78,19 @@ class InterfaceManager:
                 print(current_recipe.__str__())
                 self.__print_substitutions_performed(substitutions_performed)
             elif selected_option == '6':
+                current_recipe, substitutions_performed = current_recipe.transform_cuisine('italy')
+                print("\nThe new, more Italian version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+                self.__print_substitutions_performed(substitutions_performed)
+            elif selected_option == '7':
+                current_recipe = current_recipe.transform_size(2.0)
+                print("\nThe new, double portion version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+            elif selected_option == '8':
+                current_recipe = current_recipe.transform_size(0.5)
+                print("\nThe new, half portion version of the recipe is below: \n".upper())
+                print(current_recipe.__str__())
+            elif selected_option == '9':
                 terminate = True
             else:
                 print('Invalid input. Please input a number between 0 and 6.')
@@ -100,7 +113,10 @@ class InterfaceManager:
         print('[3]: Make recipe non-vegetarian')
         print('[4]: Make recipe Japanese')
         print('[5]: Make recipe Mexican')
-        print('[6]: End session')
+        print('[6]: Make recipe Italian')
+        print('[7]: Make recipe double portion')
+        print('[8]: Make recipe half portion')
+        print('[9]: End session')
         print('***************************************************************\n')
         return
 

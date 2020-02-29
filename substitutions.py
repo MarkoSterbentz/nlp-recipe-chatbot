@@ -1039,3 +1039,5 @@ SUB["mexico"] = {'': ['chili powder', 'coriander', 'cumin', 'mexican oregano', '
  'yuzukoshō': ['adobo', 'chamoy', 'mole', 'pico de gallo', 'pipian', 'salsa roja', 'salsa verde'],
  'zucchini': ['chili pepper', 'jalapeno', 'maize']}
 
+SUB["italy"] = {}
+
