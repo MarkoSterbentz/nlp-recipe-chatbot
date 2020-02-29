@@ -2,24 +2,24 @@ name,country
 taleggio,
 cotija,
 roquefort,
-mozzarella,
+mozzarella,italy
 feta,
 cottage,
 cheddar,
 gouda,
-parmesan,
+parmesan,italy
 camembert,
 manchego,
 emmental,
 monterey Jack,
-pecorino toscano,
+pecorino toscano,italy
 chèvre,
 fontina d’aosta,
-gorgonzola,
-robiola piemonte,
-mascarpone,
+gorgonzola,italy
+robiola piemonte,italy
+mascarpone,italy
 provolone,
-asiago,
+asiago,italy
 pepper jack,
 colby jack,
 brie,
@@ -30,9 +30,11 @@ farmer,
 colby,
 goat,
 blue,
-mascarpone,
+piave,italy
 sakura cheese,japan
 queso oaxaca,mexico
 queso panelo,mexico
 queso blanco,mexico
 cotija,mexico
+ricotta,italy
+burrata,italy
