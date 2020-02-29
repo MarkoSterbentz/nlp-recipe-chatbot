@@ -21,7 +21,7 @@ class Recipe:
         '''
 
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -67,7 +67,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -114,7 +114,7 @@ class Recipe:
         '''
 
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -151,7 +151,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -188,7 +188,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -234,7 +234,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Scale each ingredient quantity by the specified amount
         for ing in transformed_recipe.ingredients:
