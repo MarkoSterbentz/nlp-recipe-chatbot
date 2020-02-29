@@ -8,9 +8,11 @@ class Recipe:
     Recipe
     A class for storing needed information for a single recipe and handling transformations of the recipe.
     '''
-    def __init__(self, ingredients, cooking_steps):
+    def __init__(self, ingredients, cooking_steps, tools, methods):
         self.ingredients = ingredients
         self.cooking_steps = cooking_steps
+        self.tools = tools
+        self.methods = methods
 
     def transform_healthy(self):
         '''
@@ -254,6 +256,14 @@ class Recipe:
         ret_val += 'COOKING STEPS:\n'
         ret_val += '***************************************************************\n    - '
         ret_val += '\n    - '.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
+        ret_val += '\n***************************************************************\n'
+        ret_val += 'TOOLS:\n'
+        ret_val += '***************************************************************\n    '
+        ret_val += '\n    '.join(self.tools) + '\n'
+        ret_val += '\n***************************************************************\n'
+        ret_val += 'METHODS:\n'
+        ret_val += '***************************************************************\n    '
+        ret_val += '\n    '.join(self.methods) + '\n'
         ret_val += '\n***************************************************************\n'
 
         return ret_val
