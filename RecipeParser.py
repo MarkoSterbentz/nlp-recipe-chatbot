@@ -22,6 +22,16 @@ def string_to_decimal(string_number):
         num = None
     return num
 
+def substring_insert(ingredient_list, ingredient):
+    for i, ing in enumerate(ingredient_list):
+        if ingredient.name in ing.name:
+            ingredient_list.insert(i+1, ingredient)
+            return
+        elif ing.name in ingredient.name:
+            ingredient_list.insert(i, ingredient)
+            return
+    ingredient_list.append(ingredient)
+    return
 
 def get_recipe(url):
     try:
@@ -59,6 +69,8 @@ def get_recipe(url):
                 elif token.pos_ in 'ADJ':
                     descriptor.append(token.string.strip())
 
+            substring_insert(ingredients, Ingredient(' '.join(ingredient_name), quantity, unit, descriptor, preparation, text))
+
             # Check cooking tools
             for tool in tool_list:
                 if tool in text and method not in tools:
@@ -68,8 +80,6 @@ def get_recipe(url):
             for method in method_list:
                 if method in text and method not in methods:
                     methods.append(method)
-
-            ingredients.append(Ingredient(' '.join(ingredient_name), quantity, unit, descriptor, preparation, text))
 
         steps = []
         html_steps = recipe_page.find_all(class_='recipe-directions__list--item')
