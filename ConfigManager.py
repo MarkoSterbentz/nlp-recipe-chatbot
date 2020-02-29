@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import pprint
+import copy
 
 # IMPORTANT: SUBSTITUTION DICTIONARY INFORMATION and OFFICIAL CUISINE TYPE / COUNTRY NAMES
 cuisine_types = ['japan', 'mexico', 'italy']
@@ -143,3 +144,20 @@ class ConfigManager:
                     ingredient_dict[ingredient_type].append(row.name)
 
         return ingredient_dict
+
+    def load_unhealthy_ingredients(self):
+        '''
+        Loads a set of unhealthy ingredients that can be halved or doubled.
+        :return: A set of the unhealthy ingredient names.
+        '''
+        unhealthy_categories = ['condiments', 'sweeteners']
+
+        ingredient_dict = self.load_ingredient_dictionary()
+
+        unhealthy_ingredients = set()
+
+        for category in unhealthy_categories:
+            for ing_name in ingredient_dict[category]:
+                unhealthy_ingredients.add(ing_name)
+
+        return unhealthy_ingredients

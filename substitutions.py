@@ -817,7 +817,7 @@ SUB["mexico"] = {'': ['chili powder', 'coriander', 'cumin', 'mexican oregano', '
  'fry sauce': ['adobo', 'chamoy', 'mole', 'pico de gallo', 'pipian', 'salsa roja', 'salsa verde'],
  'furikake': ['adobo', 'chamoy', 'mole', 'pico de gallo', 'pipian', 'salsa roja', 'salsa verde'],
  'garam masala': ['chili powder', 'coriander', 'cumin', 'mexican oregano', 'cilantro'],
- 'garlic': ['chili pepper', 'jalapeno', 'maize', 'chili powder', 'coriander', 'cumin', 'mexican oregano', 'cilantro'],
+ 'garlic': ['chili powder', 'coriander', 'cumin', 'mexican oregano', 'cilantro'],
  'garlic powder': ['chili powder', 'coriander', 'cumin', 'mexican oregano', 'cilantro'],
  'garlic salt': ['chili powder', 'coriander', 'cumin', 'mexican oregano', 'cilantro'],
  'gem squash': ['chili pepper', 'jalapeno', 'maize'],

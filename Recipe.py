@@ -1,6 +1,7 @@
 import copy
 from substitutions import SUB
 import random
+import ConfigManager as cm
 
 class Recipe:
     '''
@@ -20,7 +21,7 @@ class Recipe:
         '''
 
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -28,19 +29,35 @@ class Recipe:
         for orig_ing in self.ingredients:
             if orig_ing.name in SUB['to_healthy']:
 
+                # Get a list of all possible substitutions for this ingredient
+                substitution_candidates = copy.deepcopy(SUB['to_healthy'][orig_ing.name])
+
+                # Remove all candidates that already exist within the recipe
+                valid_candidates = []
+                ingredient_names = [ing.name for ing in transformed_recipe.ingredients]
+                for candidate in substitution_candidates:
+                    if candidate not in ingredient_names:
+                        valid_candidates.append(candidate)
+
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB['to_healthy'][orig_ing.name])
+                if len(valid_candidates) > 0:
+                    new_ing_name = random.choice(valid_candidates)
 
-                # Perform the ingredient substitution
-                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+                    # Perform the ingredient substitution
+                    transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
 
-                # make a note of which ingredient was substituted for what (so we can report that to the user)
-                actual_substitutions[orig_ing.name] = new_ing_name
+                    # make a note of which ingredient was substituted for what (so we can report that to the user)
+                    actual_substitutions[orig_ing.name] = new_ing_name
 
-        # If no whole ingredient substitutions were made, half the amount of condiments or unhealthy spices/herbs
-        if len(actual_substitutions) == 0:
-            # TODO: Implement a way to find unhealthy spices/herbs in the recipe and half the amount of them
-            pass
+        # Half the amount of condiments or unhealthy spices/herbs
+        manager = cm.ConfigManager()
+        unhealthy_ingredients_set = manager.load_unhealthy_ingredients()
+
+        for ing in transformed_recipe.ingredients:
+            if ing.name in unhealthy_ingredients_set:
+                old_ing = copy.deepcopy(ing)
+                ing.scale(0.5)
+                actual_substitutions[old_ing.__str__()] = ing.__str__()
 
         return transformed_recipe, actual_substitutions
 
@@ -50,7 +67,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -58,19 +75,35 @@ class Recipe:
         for orig_ing in self.ingredients:
             if orig_ing.name in SUB['to_unhealthy']:
 
+                # Get a list of all possible substitutions for this ingredient
+                substitution_candidates = copy.deepcopy(SUB['to_unhealthy'][orig_ing.name])
+
+                # Remove all candidates that already exist within the recipe
+                valid_candidates = []
+                ingredient_names = [ing.name for ing in transformed_recipe.ingredients]
+                for candidate in substitution_candidates:
+                    if candidate not in ingredient_names:
+                        valid_candidates.append(candidate)
+
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB['to_unhealthy'][orig_ing.name])
+                if len(valid_candidates) > 0:
+                    new_ing_name = random.choice(valid_candidates)
 
-                # Perform the ingredient substitution
-                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+                    # Perform the ingredient substitution
+                    transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
 
-                # make a note of which ingredient was substituted for what (so we can report that to the user)
-                actual_substitutions[orig_ing.name] = new_ing_name
+                    # make a note of which ingredient was substituted for what (so we can report that to the user)
+                    actual_substitutions[orig_ing.name] = new_ing_name
 
-        # If no whole ingredient substitutions were made, half the amount of condiments or unhealthy spices/herbs
-        if len(actual_substitutions) == 0:
-            # TODO: Implement a way to find unhealthy spices/herbs in the recipe and double the amount of them
-            pass
+        # Double the amount of condiments or unhealthy spices/herbs
+        manager = cm.ConfigManager()
+        unhealthy_ingredients_set = manager.load_unhealthy_ingredients()
+
+        for ing in transformed_recipe.ingredients:
+            if ing.name in unhealthy_ingredients_set:
+                old_ing = copy.deepcopy(ing)
+                ing.scale(1.5)
+                actual_substitutions[old_ing.__str__()] = ing.__str__()
 
         return transformed_recipe, actual_substitutions
 
@@ -81,7 +114,7 @@ class Recipe:
         '''
 
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -89,14 +122,25 @@ class Recipe:
         for orig_ing in self.ingredients:
             if orig_ing.name in SUB['to_vegetarian']:
 
+                # Get a list of all possible substitutions for this ingredient
+                substitution_candidates = copy.deepcopy(SUB['to_vegetarian'][orig_ing.name])
+
+                # Remove all candidates that already exist within the recipe
+                valid_candidates = []
+                ingredient_names = [ing.name for ing in transformed_recipe.ingredients]
+                for candidate in substitution_candidates:
+                    if candidate not in ingredient_names:
+                        valid_candidates.append(candidate)
+
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB['to_vegetarian'][orig_ing.name])
+                if len(valid_candidates) > 0:
+                    new_ing_name = random.choice(valid_candidates)
 
-                # Perform the ingredient substitution
-                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+                    # Perform the ingredient substitution
+                    transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
 
-                # make a note of which ingredient was substituted for what (so we can report that to the user)
-                actual_substitutions[orig_ing.name] = new_ing_name
+                    # make a note of which ingredient was substituted for what (so we can report that to the user)
+                    actual_substitutions[orig_ing.name] = new_ing_name
 
         return transformed_recipe, actual_substitutions
 
@@ -107,7 +151,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -115,25 +159,36 @@ class Recipe:
         for orig_ing in self.ingredients:
             if orig_ing.name in SUB['to_non_vegetarian']:
 
+                # Get a list of all possible substitutions for this ingredient
+                substitution_candidates = copy.deepcopy(SUB['to_non_vegetarian'][orig_ing.name])
+
+                # Remove all candidates that already exist within the recipe
+                valid_candidates = []
+                ingredient_names = [ing.name for ing in transformed_recipe.ingredients]
+                for candidate in substitution_candidates:
+                    if candidate not in ingredient_names:
+                        valid_candidates.append(candidate)
+
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB['to_non_vegetarian'][orig_ing.name])
+                if len(valid_candidates) > 0:
+                    new_ing_name = random.choice(valid_candidates)
 
-                # Perform the ingredient substitution
-                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+                    # Perform the ingredient substitution
+                    transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
 
-                # make a note of which ingredient was substituted for what (so we can report that to the user)
-                actual_substitutions[orig_ing.name] = new_ing_name
+                    # make a note of which ingredient was substituted for what (so we can report that to the user)
+                    actual_substitutions[orig_ing.name] = new_ing_name
 
         return transformed_recipe, actual_substitutions
 
     def transform_cuisine(self, cuisine_name):
         '''
         Transforms the recipe to be more like the cuisine type given.
-        :param cuisine_name: The name of the cuisine to transform to. Valid names: {mexico, japan}
+        :param cuisine_name: The name of the cuisine to transform to. Valid names: {mexico, japan, italy}
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Init dictionary of substitutions that are actually performed by the transformation
         actual_substitutions = {}
@@ -141,16 +196,35 @@ class Recipe:
         for orig_ing in self.ingredients:
             if orig_ing.name in SUB[cuisine_name]:
 
+                # Get a list of all possible substitutions for this ingredient
+                substitution_candidates = copy.deepcopy(SUB[cuisine_name][orig_ing.name])
+
+                # Remove all candidates that already exist within the recipe
+                valid_candidates = []
+                ingredient_names = [ing.name for ing in transformed_recipe.ingredients]
+                for candidate in substitution_candidates:
+                    if candidate not in ingredient_names:
+                        valid_candidates.append(candidate)
+
                 # Pick a new ingredient to substitute in
-                new_ing_name = random.choice(SUB[cuisine_name][orig_ing.name])
+                if len(valid_candidates) > 0:
+                    new_ing_name = random.choice(valid_candidates)
 
-                # Perform the ingredient substitution
-                transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
+                    # Perform the ingredient substitution
+                    transformed_recipe.substitute_ingredients(orig_ing, new_ing_name)
 
-                # make a note of which ingredient was substituted for what (so we can report that to the user)
-                actual_substitutions[orig_ing.name] = new_ing_name
+                    # make a note of which ingredient was substituted for what (so we can report that to the user)
+                    actual_substitutions[orig_ing.name] = new_ing_name
 
         return transformed_recipe, actual_substitutions
+
+        # for each ingredient in self.ingredients:
+            # if there is a valid substitution for this ingredient in the current transformation:
+                # Get a list of all possible substitutions for this ingredient
+                # Remove all ingredients from the substitution candidates list that are already in the recipe
+                # # Randomly pick one of the remaining substitution_candidates
+                # If there are no remaining substitution_candidates:
+                    # Do nothing for cuisine transformations
 
 
     def transform_size(self, scale):
@@ -160,7 +234,7 @@ class Recipe:
         :return: The transformed recipe.
         '''
         # Make a copy of the current recipe
-        transformed_recipe = Recipe(copy.deepcopy(self.ingredients), copy.deepcopy(self.cooking_steps))
+        transformed_recipe = copy.deepcopy(self)
 
         # Scale each ingredient quantity by the specified amount
         for ing in transformed_recipe.ingredients:
@@ -201,7 +275,6 @@ class Recipe:
         :param new_ing_name: The name new ingredient to add to the recipe .
         :return: None
         '''
-        # TODO: Make sure the ingredient isn't already a part of the recipe
 
         for i in range(len(self.ingredients)):
             if self.ingredients[i].name == old_ing.name:
