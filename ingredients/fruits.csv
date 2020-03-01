@@ -1,7 +1,7 @@
 name,country
 apple,
 apricot,
-avocado,
+avocado,mexico
 banana,
 bartlett pear,
 bilberry,
@@ -33,7 +33,7 @@ goji berry,
 gooseberry,
 grape,
 grapefruit,
-guava,
+guava,mexico
 honeydew,
 huckleberry,
 jackfruit,
@@ -42,13 +42,13 @@ jujube,
 kiwi,
 kiwi fruit,
 kumquat,
-lemon,
-lime,
+lemon,italy
+lime,mexico
 loquat,
-lychee,
-mandarin,
+lychee,japan
+mandarin,japan
 mandarine,
-mango,
+mango,mexico
 mangosteen,
 marion berry,
 marionberry,
@@ -63,7 +63,7 @@ passion fruit,
 passionfruit,
 peach,
 pear,
-persimmon,
+persimmon,japan
 physalis,
 pineapple,
 plantain,
@@ -90,3 +90,6 @@ ugli fruit,
 watermelon,
 western raspberry,
 williams pear,
+hyuganatsu,japan
+melograno,italy
+pricky pear,italy

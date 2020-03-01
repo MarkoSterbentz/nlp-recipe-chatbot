@@ -150,7 +150,7 @@ class ConfigManager:
         Loads a set of unhealthy ingredients that can be halved or doubled.
         :return: A set of the unhealthy ingredient names.
         '''
-        unhealthy_categories = ['condiments', 'sweeteners']
+        unhealthy_categories = ['salts', 'condiments', 'sweeteners_unhealthy']
 
         ingredient_dict = self.load_ingredient_dictionary()
 
