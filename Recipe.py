@@ -2,6 +2,8 @@ import copy
 from substitutions import SUB
 import random
 import ConfigManager as cm
+import Ingredient
+import CookingStep
 
 class Recipe:
     '''
@@ -179,6 +181,14 @@ class Recipe:
                     # make a note of which ingredient was substituted for what (so we can report that to the user)
                     actual_substitutions[orig_ing.name] = new_ing_name
 
+        # If there are no ways to make this dish non-vegetarian through pure substitution, add a half cup of chicken
+        if len(actual_substitutions) == 0:
+            new_ing = Ingredient.Ingredient('chicken', 0.5, 'cup', ['cooked'], ['diced'])
+            new_cooking_step = CookingStep.CookingStep(ingredients=[new_ing.name], text='Add chicken.')
+            transformed_recipe.ingredients.append(new_ing)
+            transformed_recipe.cooking_steps.append(new_cooking_step)
+            actual_substitutions[' '] = new_ing.name
+
         return transformed_recipe, actual_substitutions
 
     def transform_cuisine(self, cuisine_name):
@@ -218,14 +228,6 @@ class Recipe:
 
         return transformed_recipe, actual_substitutions
 
-        # for each ingredient in self.ingredients:
-            # if there is a valid substitution for this ingredient in the current transformation:
-                # Get a list of all possible substitutions for this ingredient
-                # Remove all ingredients from the substitution candidates list that are already in the recipe
-                # # Randomly pick one of the remaining substitution_candidates
-                # If there are no remaining substitution_candidates:
-                    # Do nothing for cuisine transformations
-
 
     def transform_size(self, scale):
         '''
@@ -248,6 +250,9 @@ class Recipe:
         :return: The recipe in a nice format.
         '''
         ret_val = ''
+        ret_val += '******************************************************************************************************************************\n'
+        ret_val += '                                                            RECIPE:\n'
+        ret_val += '******************************************************************************************************************************\n'
         ret_val += '***************************************************************\n'
         ret_val += 'INGREDIENTS:\n'
         ret_val += '***************************************************************\n    '

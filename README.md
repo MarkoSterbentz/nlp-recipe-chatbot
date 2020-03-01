@@ -22,6 +22,12 @@ The repository for this project can be found on GitHub: https://github.com/Marko
 
 Note that a full list of all packages installed can be found in requirements.txt.
 
+## Running the Project
+This project requires Python 3.6+. It can be ran on the command line and terminal using the following input:
+
+`python main.py`
+
+
 ## How it Works
 ### Parsing and Internal Representation
 Parsing of recipe pages from allrecipes.com is done using the BeautifulSoup library. For a
@@ -37,9 +43,9 @@ considered to be a part of the ingredient name, verbs are considered to be ingre
 preparation steps, and adjectives are considered to be descriptors.
 
 As with the ingredients, the cooking steps of the recipe are extracted from the page using
-the content of HTML tags having attributes corresponding major cooking steps. Individidual
+the content of HTML tags having attributes corresponding major cooking steps. Individual
 steps within each major step are
-differentiated by considering each sencence a new step. Each of these steps are then scanned
+differentiated by considering each sentence a new step. Each of these steps are then scanned
 to identify whether they contain ingredients from the recipe's ingredient
 list. If so, the ingredient in the text of the cooking step is replaced by a placeholder,
 which makes substitutions easier during recipe transformations.
@@ -54,7 +60,39 @@ object has a name, quantity, measurement unit, list of descriptors, and list of 
 steps. Each cooking step object has a list of ingredients strings and also has the text of
 the cooking step, where mentioned ingredients have been replaced by placeholders.
 
-### Substitutions
+### Substitutions and Transformations
+In order to perform the substitutions, it was first necessary to construct a set of ingredient types and properties
+associated with each of these types. The properties for each ingredient type can be found within the
+ `ingredient_type_properties.csv` file in the `config` directory. A list of ingredients that are a part of each of these
+ types can be found in the `ingredients` directory. 
+ 
+When developing the of hierarchy of ingredient types, we considered how it would relate to each of the recipe transformations 
+that could be applied. In addition, ingredient properties like texture and cooking method were considered to ensure that the
+substitution of one ingredient for another would maintain the consistency of the recipe. For each of the ingredient types, 
+there is a mapping to another ingredient type for each transformation. With these mappings in hand, 
+the substitution dictionary found in `substitutions.py` can be generated. This allows for a fast runtime look-up to
+be done when deciding whether an ingredient should be substituted out for a specific transformation, and what the new 
+ingredient to replace it should be. 
+ 
+There are 9 transformations that the user can apply to any given recipe:
+1. To vegetarian (make the recipe vegetarian)
+2. To non-vegetarian (make the recipe non-vegetarian)
+3. To healthy (make the recipe healthier)
+4. To unhealthy (make the recipe less healthy)
+5. To Japanese (make the recipe incorporate conventional Japanese ingredients)
+6. To Mexican (make the recipe incorporate conventional Mexican ingredients)
+7. To Italian (make the recipe incorporate conventional Italian ingredients)
+8. Increase portion quantities 
+9. Decrease portion quantities
 
+The general algorithm for performing a transformation is roughly the same across each type (except for increasing/decreasing
+portion quantities), with some transformation specific additions. For each of the ingredients in the recipe, we 
+check and see if there is a valid substitution for this ingredient within the pre-generated substitution dictionary. 
+If there is, we get the list of candidate substitutions. For each of these, we substitute it in unless 
+it is already a part of the recipe. This involves updating the ingredient list of the recipe, as well as 
+ensuring that the cooking step(s) associated with this ingredient are properly updated for the new ingredient.
 
-
+When making a recipe more or less healthy, there is an additional step that either increases or decreases the quantity of
+unhealthy ingredients in the recipe. For the non-vegetarian transformation, if there are no possible substitutions to 
+make to the recipe that would cause it to be non-vegetarian, a meat is added to the recipe and the cooking steps required
+to incorporate this meat are added to the recipe.
