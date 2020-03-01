@@ -184,7 +184,7 @@ class Recipe:
         # If there are no ways to make this dish non-vegetarian through pure substitution, add a half cup of chicken
         if len(actual_substitutions) == 0 and not self.contains_meat():
             new_ing = Ingredient.Ingredient('chicken', 0.5, 'cup', ['cooked'], ['diced'])
-            new_cooking_step = CookingStep.CookingStep(ingredients=[new_ing.name], text='Add chicken.')
+            new_cooking_step = CookingStep.CookingStep(ingredients=[new_ing.name], text='Add {0}.')
 
             transformed_recipe.ingredients.append(new_ing)
             transformed_recipe.cooking_steps.append(new_cooking_step)
