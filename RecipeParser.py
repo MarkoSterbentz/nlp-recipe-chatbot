@@ -50,7 +50,7 @@ def get_recipe(url):
             ingredient_name = []
             descriptor = []
             preparation = []
-            unit_specifier = re.search('(\(.*\) \w+) *(.*)', groups.group(2))
+            unit_specifier = re.search('^ *(\(.*\) \w+) *(.*)', groups.group(2))
             unit = ''
             if unit_specifier is not None:
                 unit += unit_specifier.group(1)
@@ -89,17 +89,18 @@ def get_recipe(url):
                     step_ingredients = []
                     ing_num = 0
                     for ing in ingredients:
-                        if ing.name in step:
-                            step_ingredients.append(ing.name)
-                            step = step.replace(ing.name, '{' + str(ing_num) + '}')
-                            ing_num += 1
-                        else:
-                            for ing_part in ing.name.split():
-                                if ing_part in step:
+                        ing_terms = ing.name.split()
+                        num_terms = len(ing_terms)
+                        while num_terms > 0:
+                            for idx in range(len(ing_terms) - num_terms + 1):
+                                composite_term = ' '.join(ing_terms[idx:idx+num_terms])
+                                if composite_term in step:
                                     step_ingredients.append(ing.name)
-                                    step = step.replace(ing_part, '{' + str(ing_num) + '}')
+                                    step = step.replace(composite_term, '{' + str(ing_num) + '}')
                                     ing_num += 1
+                                    num_terms = 0
                                     break
+                            num_terms -= 1
                     steps.append(CookingStep(ingredients=step_ingredients, text=step))
                 steps[-1].text = steps[-1].text.strip().rstrip('.')
 
@@ -203,4 +204,4 @@ def get_mexican_recipes(limit=100):
 # print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
-
+print(get_recipe('https://www.allrecipes.com/recipe/71722/asian-lettuce-wraps/?internalSource=previously%20viewed&referringContentType=Homepage&clickId=cardslot%2036'))
