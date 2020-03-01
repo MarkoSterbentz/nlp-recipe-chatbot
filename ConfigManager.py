@@ -161,3 +161,21 @@ class ConfigManager:
                 unhealthy_ingredients.add(ing_name)
 
         return unhealthy_ingredients
+
+    def load_meat_ingredients(self):
+        '''
+        Loads a set of meats.
+        :return: A set of meat ingredient names.
+        '''
+        meat_categories = ['red_meat_ground', 'red_meat_cut', 'boned_fish', 'shellfish', 'poultry_ground',
+                           'poultry_cut', 'eggs_animal', 'animal_broth_healthy', 'animal_broth_unhealthy', 'lard']
+
+        ingredient_dict = self.load_ingredient_dictionary()
+        meat_set = set()
+
+        for category in meat_categories:
+            for ing_name in ingredient_dict[category]:
+                meat_set.add(ing_name)
+
+        return meat_set
+

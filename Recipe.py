@@ -182,12 +182,14 @@ class Recipe:
                     actual_substitutions[orig_ing.name] = new_ing_name
 
         # If there are no ways to make this dish non-vegetarian through pure substitution, add a half cup of chicken
-        if len(actual_substitutions) == 0:
+        if len(actual_substitutions) == 0 and not self.contains_meat():
             new_ing = Ingredient.Ingredient('chicken', 0.5, 'cup', ['cooked'], ['diced'])
             new_cooking_step = CookingStep.CookingStep(ingredients=[new_ing.name], text='Add chicken.')
+
             transformed_recipe.ingredients.append(new_ing)
             transformed_recipe.cooking_steps.append(new_cooking_step)
-            actual_substitutions[' '] = new_ing.name
+
+            actual_substitutions['NEW_ING'] = new_ing.name
 
         return transformed_recipe, actual_substitutions
 
@@ -291,3 +293,17 @@ class Recipe:
                     self.cooking_steps[i].ingredients[j] = new_ing_name
         return
 
+    def contains_meat(self):
+        '''
+        Determines if the recipe contains meat.
+        :return: Boolean that says whether the current recipe contains meat or not.
+        '''
+
+        manager = cm.ConfigManager()
+        meat_set = manager.load_meat_ingredients()
+
+        for ing in self.ingredients:
+            if ing.name in meat_set:
+                return True
+
+        return False
