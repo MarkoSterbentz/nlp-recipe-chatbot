@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from CookingStep import CookingStep
+import ConfigManager
 from fractions import Fraction
 from Ingredient import Ingredient
 import json
@@ -23,18 +24,26 @@ def string_to_decimal(string_number):
     return num
 
 def substring_insert(ingredient_list, ingredient):
+    new_ingredient = ingredient.name
+    if len(new_ingredient) > 0 and new_ingredient[-1] == 's':
+        new_ingredient = new_ingredient[:-1]
     for i, ing in enumerate(ingredient_list):
-        if ingredient.name in ing.name:
+        list_ingredient = ing.name
+        if len(list_ingredient) > 0 and list_ingredient[-1] == 's':
+            list_ingredient = list_ingredient[:-1]
+        if new_ingredient in list_ingredient:
             ingredient_list.insert(i+1, ingredient)
             return
-        elif ing.name in ingredient.name:
+        elif list_ingredient in new_ingredient :
             ingredient_list.insert(i, ingredient)
             return
     ingredient_list.append(ingredient)
     return
 
 def get_recipe(url):
-    try:
+    # try:
+        cm = ConfigManager.ConfigManager()
+        all_ingredients = cm.load_ingredient_set()
         nlp = spacy.load("en_core_web_sm")
         recipe_page = BeautifulSoup(requests.get(url).content, 'html.parser')
 
@@ -69,7 +78,18 @@ def get_recipe(url):
                 elif token.pos_ in 'ADJ':
                     descriptor.append(token.string.strip())
 
-            substring_insert(ingredients, Ingredient(' '.join(ingredient_name), quantity, unit, descriptor, preparation, text))
+            if ' '.join(ingredient_name) not in all_ingredients:
+                temp_ingredient_name = [i for i in ingredient_name]
+                temp_descriptor = [d for d in descriptor]
+                while len(temp_descriptor) > 0:
+                    temp_ingredient_name.insert(0, temp_descriptor[-1])
+                    temp_descriptor = temp_descriptor[:-1]
+                    if ' '.join(temp_ingredient_name).lower() in all_ingredients:
+                        ingredient_name = temp_ingredient_name
+                        descriptor = temp_descriptor
+                        break
+
+            substring_insert(ingredients, Ingredient(' '.join(ingredient_name).lower(), quantity, unit, descriptor, preparation, text))
 
             # Check cooking tools
             for tool in tool_list:
@@ -94,14 +114,34 @@ def get_recipe(url):
                         while num_terms > 0:
                             for idx in range(len(ing_terms) - num_terms + 1):
                                 composite_term = ' '.join(ing_terms[idx:idx+num_terms])
-                                if composite_term in step:
+                                search_term1 = re.compile(composite_term, re.IGNORECASE)
+                                search_term2 = re.compile(composite_term[:-1], re.IGNORECASE)
+                                replacement = '{' + str(ing_num) + '}'
+                                if re.search(search_term1, step):
                                     step_ingredients.append(ing.name)
-                                    step = step.replace(composite_term, '{' + str(ing_num) + '}')
+                                    # step = step.replace(composite_term, '{' + str(ing_num) + '}')
+                                    step = re.sub(search_term1, replacement, step)
+                                    ing_num += 1
+                                    num_terms = 0
+                                    break
+                                elif composite_term[-1] == 's' and re.search(search_term2, step):
+                                    step_ingredients.append(ing.name)
+                                    # step = step.replace(composite_term[:-1], '{' + str(ing_num) + '}')
+                                    step = re.sub(search_term2, replacement, step)
                                     ing_num += 1
                                     num_terms = 0
                                     break
                             num_terms -= 1
-                    steps.append(CookingStep(ingredients=step_ingredients, text=step))
+
+                    # check for quantities in step
+                    quantities = []
+                    for quantity_unit_match in re.finditer('(\d[\d.-/ ]*) ([^.,;: ]+)', step):
+                        if quantity_unit_match.group(2) in measurement_units or re.match(' *{\d+} *', quantity_unit_match.group(2)):
+                            quantities.append(string_to_decimal(quantity_unit_match.group(1)))
+                            step = step.replace(quantity_unit_match.group(0), '{' + str(ing_num) + '} ' + quantity_unit_match.group(2))
+                            ing_num += 1
+
+                    steps.append(CookingStep(ingredients=step_ingredients, quantities=quantities, text=step))
                 steps[-1].text = steps[-1].text.strip().rstrip('.')
 
                 # Check cooking tools
@@ -115,7 +155,7 @@ def get_recipe(url):
                         methods.append(method)
 
         return Recipe(ingredients, steps, tools, methods)
-    except:
+    # except:
         print('Unable to build recipe object from url.')
         return None
 
@@ -185,7 +225,7 @@ def get_mexican_recipes(limit=100):
     return get_cuisine_recipe_urls(base_url, output_file)
 
 
-# print(get_recipe('https://www.allrecipes.com/recipe/269592/pork-chops-in-garlic-mushroom-sauce/?internalSource=previously%20viewed&referringContentType=Homepage'))
+# print(get_recipe('https://www.allrecipes.com/recipe/20088/awesome-eggplant-rollatine/'))
 # print('')
 # noodle_recipe = get_recipe('https://www.allrecipes.com/recipe/223529/vermicelli-noodle-bowl/?internalSource=previously%20viewed&referringContentType=Homepage')
 # print(noodle_recipe)

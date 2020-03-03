@@ -243,6 +243,8 @@ class Recipe:
         # Scale each ingredient quantity by the specified amount
         for ing in transformed_recipe.ingredients:
             ing.scale(scale)
+        for step in transformed_recipe.cooking_steps:
+            step.quantities = [scale * quantity for quantity in step.quantities]
 
         return transformed_recipe
 

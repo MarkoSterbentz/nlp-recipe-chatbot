@@ -119,10 +119,28 @@ class ConfigManager:
         return
 
 
+    def load_ingredient_set(self):
+        '''
+        Loads all of the ingredient lists into a set.
+        :return: The set mapping ingredient types to a list of those ingredients.
+        '''
+
+        ingredient_set = set()
+
+        ingredient_directory = 'ingredients'
+        for filename in os.listdir(ingredient_directory):
+            if filename.endswith('.csv'):
+                df = self.load_csv(ingredient_directory + '/' + filename)
+                df.fillna('', inplace=True)
+
+                for row in df.itertuples(index=False):
+                    ingredient_set.add(row.name)
+
+        return ingredient_set
+
     def load_ingredient_dictionary(self):
         '''
         Loads all of the ingredient lists into a dictionary index by the .csv file name.
-        :param ingredient_dir: The directory containing all of the .csv files of ingredients.
         :return: The dictionary mapping ingredient types to a list of those ingredients.
         '''
 
