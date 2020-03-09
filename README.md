@@ -1,15 +1,11 @@
-# CS 337 - Recipe Transformer
+# CS 337 - Recipe Chatbot
 
-This project takes link to a recipe from AllRecipes.com, scrapes it, and allows for a variety of transformations to be
-applied to it according to the user's input. The transformations include making the recipe more healthy or unhealthy,
-making the recipe vegetarian or non-vegetarian, doubling the portion size or cutting it in half, and transforming the
-ingredients used to be more like a traditional Japanese, Mexican, or Italian dish.
+This project aims to provide a conversational interface for interacting with the recipe transformer. 
 
 Team Members (Group 4): Cameron Barrie, Alexander Reneau, Marko Sterbentz
 
-The repository for this project can be found on GitHub: https://github.com/MarkoSterbentz/nlp-recipe-transformer
+The repository for this project can be found on GitHub: https://github.com/MarkoSterbentz/nlp-recipe-chatbot
 
-![alt text](configs/recipe_transformer.jpg "Recipe Transformer")
 
 ## Required Packages
 - Pandas (for data containers)
