@@ -106,7 +106,7 @@ class InterfaceManager:
             if self.current_recipe is None:
                 print('Sorry, I wasn\'t able to find a recipe there.\n')
 
-            print('Sounds good! I was able to find a recipe for INSERT TITLE HERE. What would you like to do?')  # TODO: Insert the recipe title here
+            print('Sounds good! I was able to find a recipe for \'{}\'. What would you like to do?'.format(self.current_recipe.title))
             print('[1] See the ingredient list or [2] View the steps?')
             self.last_question = 'view_recipe'
             self.waiting_for_answer = True
