@@ -10,7 +10,8 @@ class Recipe:
     Recipe
     A class for storing needed information for a single recipe and handling transformations of the recipe.
     '''
-    def __init__(self, ingredients, cooking_steps, tools, methods):
+    def __init__(self, title, ingredients, cooking_steps, tools, methods):
+        self.title = title
         self.ingredients = ingredients
         self.cooking_steps = cooking_steps
         self.tools = tools
@@ -255,7 +256,7 @@ class Recipe:
         '''
         ret_val = ''
         ret_val += '******************************************************************************************************************************\n'
-        ret_val += '                                                            RECIPE:\n'
+        ret_val += '                                       ' + self.title + ':\n'
         ret_val += '******************************************************************************************************************************\n'
         ret_val += '***************************************************************\n'
         ret_val += 'INGREDIENTS:\n'

@@ -50,6 +50,8 @@ def get_recipe(url):
         tools = []
         methods = []
 
+        name = recipe_page.find(id='recipe-main-content').contents[0]
+
         ingredients = []
         html_ingredients = recipe_page.find_all(attrs={'itemprop': 'recipeIngredient', 'data-nameid': re.compile('^[^0]')})
         for lst in html_ingredients:
@@ -154,7 +156,7 @@ def get_recipe(url):
                     if method in big_step.contents[0] and method not in methods:
                         methods.append(method)
 
-        return Recipe(ingredients, steps, tools, methods)
+        return Recipe(name, ingredients, steps, tools, methods)
     # except:
         print('Unable to build recipe object from url.')
         return None
@@ -243,5 +245,5 @@ def get_mexican_recipes(limit=100):
 # print('')
 # print(get_recipe('https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage'))
 # print('')
-# print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
+print(get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
 
