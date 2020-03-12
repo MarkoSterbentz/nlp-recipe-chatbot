@@ -1,0 +1,20 @@
+---
+actions:
+  - action_display_step
+  - action_display_ingredients
+intents:
+  - greet
+  - goodbye
+  - display_ingredients
+  - display_step
+  - go_to_step
+  - how_to
+  - what_is
+responses:
+  utter_goodbye:
+    - text: Bye
+  utter_greet:
+    - text: "Hi! I'm Remy! Are you ready to cook?"
+session_config:
+  carry_over_slots_to_new_session: true
+  session_expiration_time: 60
