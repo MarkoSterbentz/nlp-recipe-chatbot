@@ -257,24 +257,59 @@ class Recipe:
         ret_val += '******************************************************************************************************************************\n'
         ret_val += '                                                            RECIPE:\n'
         ret_val += '******************************************************************************************************************************\n'
+        ret_val += self.get_ingredients_string()
+        ret_val += self.get_cooking_steps_string()
+        ret_val += self.get_tools_string()
+        ret_val += self.get_cooking_methods_string()
+
+        return ret_val
+
+    def get_ingredients_string(self):
+        '''
+        Get the ingredients of this recipe as a nicely formatted string.
+        :return: A nicely formatted string for displaying the ingredients.
+        '''
+        ret_val = ''
         ret_val += '***************************************************************\n'
         ret_val += 'INGREDIENTS:\n'
         ret_val += '***************************************************************\n    '
         ret_val += '\n    '.join([str(ingredient) for ingredient in self.ingredients]) + '\n'
+        return ret_val
+
+    def get_cooking_steps_string(self):
+        '''
+        Get the cooking steps of this recipe as a nicely formatted string.
+        :return: A nicely formatted string for displaying the cooking steps.
+        '''
+        ret_val = ''
         ret_val += '\n***************************************************************\n'
         ret_val += 'COOKING STEPS:\n'
         ret_val += '***************************************************************\n    - '
-        ret_val += '\n    - '.join([str(cooking_step) for cooking_step in self.cooking_steps]) + '\n'
+        ret_val += '\n    '.join([str(num) + '. ' + str(cooking_step) for num, cooking_step in enumerate(self.cooking_steps)]) + '\n'
+        return ret_val
+
+    def get_tools_string(self):
+        '''
+        Get the tools of this recipe as a nicely formatted string.
+        :return: A nicely formatted string for displaying the tools.
+        '''
+        ret_val = ''
         ret_val += '\n***************************************************************\n'
         ret_val += 'TOOLS:\n'
         ret_val += '***************************************************************\n    '
         ret_val += '\n    '.join(self.tools) + '\n'
-        ret_val += '\n***************************************************************\n'
+        return ret_val
+
+    def get_cooking_methods_string(self):
+        '''
+        Get the cooking methods of this recipe as a nicely formatted string.
+        :return: A nicely formatted string for displaying the cooking methods.
+        '''
+        ret_val = ''
         ret_val += 'METHODS:\n'
         ret_val += '***************************************************************\n    '
         ret_val += '\n    '.join(self.methods) + '\n'
         ret_val += '\n***************************************************************\n'
-
         return ret_val
 
     def substitute_ingredients(self, old_ing, new_ing_name):
