@@ -1,19 +1,19 @@
 from bs4 import BeautifulSoup
-from CookingStep import CookingStep
-import ConfigManager
+from RecipeParser.CookingStep import CookingStep
+import RecipeParser.ConfigManager as ConfigManager
 from fractions import Fraction
-from Ingredient import Ingredient
+from RecipeParser.Ingredient import Ingredient
 import json
 import re
-from Recipe import Recipe
+from RecipeParser.Recipe import Recipe
 import requests
 import spacy
 
-with open('configs/measurement_units.csv', 'r') as f:
+with open('RecipeParser/configs/measurement_units.csv', 'r') as f:
     measurement_units = [line.strip() for line in f.readlines()]
-with open('configs/tools.txt', 'r') as f:
+with open('RecipeParser/configs/tools.txt', 'r') as f:
     tool_list = [line.strip() for line in f.readlines()]
-with open('configs/methods.txt', 'r') as f:
+with open('RecipeParser/configs/methods.txt', 'r') as f:
     method_list = [line.strip() for line in f.readlines()]
 
 def string_to_decimal(string_number):

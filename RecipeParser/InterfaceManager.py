@@ -1,4 +1,4 @@
-import RecipeParser as rp
+import RecipeParser.RecipeParser as rp
 import string
 
 class InterfaceManager:
@@ -118,11 +118,8 @@ class InterfaceManager:
         Displays the ingredient list of the current recipe.
         :return: None
         '''
-        print(self.current_recipe.get_ingredients_string())
-        print('There you go! Let me know how else I can help.')
-        self.waiting_for_answer = False
-
-        return
+        return self.current_recipe.get_ingredients_string() + \
+            'There you go! Let me know how else I can help.'
 
     def action_display_all_steps(self):
         '''
@@ -141,11 +138,11 @@ class InterfaceManager:
         :return: None
         Note: Assumes that the values in self.current_recipe_step is within the appropriate range
         '''
+        ret_val = ""
         if self.current_recipe_step is not None and 0 <= self.current_recipe_step < len(self.current_recipe.cooking_steps):
-            print('Step ' + str(self.current_recipe_step) + '. ' + str(self.current_recipe.cooking_steps[self.current_recipe_step]) + '\n')
-        print('There you go! Let me know how else I can help.')
-        self.waiting_for_answer = False
-        return
+            ret_val += 'Step ' + str(self.current_recipe_step) + '. ' + str(self.current_recipe.cooking_steps[self.current_recipe_step]) + '\n'
+        ret_val += 'There you go! Let me know how else I can help.'
+        return ret_val
 
     def action_go_to_step(self, arg):
         '''

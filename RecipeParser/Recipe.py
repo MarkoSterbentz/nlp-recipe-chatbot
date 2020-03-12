@@ -1,9 +1,9 @@
 import copy
-from substitutions import SUB
+from RecipeParser.substitutions import SUB
 import random
-import ConfigManager as cm
-import Ingredient
-import CookingStep
+import RecipeParser.ConfigManager as cm
+import RecipeParser.Ingredient as Ingredient
+import RecipeParser.CookingStep as CookingStep
 
 class Recipe:
     '''

@@ -6,7 +6,7 @@ import copy
 # IMPORTANT: SUBSTITUTION DICTIONARY INFORMATION and OFFICIAL CUISINE TYPE / COUNTRY NAMES
 cuisine_types = ['japan', 'mexico', 'italy']
 substitution_dictionary_name = 'SUB'
-ingredient_type_props_filepath = 'configs/ingredient_type_properties.csv'
+ingredient_type_props_filepath = 'RecipeParser/configs/ingredient_type_properties.csv'
 standard_transform_col_names = ['to_vegetarian','to_non_vegetarian','to_healthy','to_unhealthy']
 
 class ConfigManager:
@@ -29,7 +29,7 @@ class ConfigManager:
         :return: None
         '''
         # Open the python file to write the dictionaries to
-        with open('substitutions.py', 'w+') as f:
+        with open('RecipeParser/substitutions.py', 'w+') as f:
             f.write(substitution_dictionary_name + ' = {}\n\n')
             self.create_standard_substitution_dictionaries(f, standard_transform_col_names)
             self.create_cuisine_substitution_dictionaries(f)
@@ -48,7 +48,7 @@ class ConfigManager:
             cuisine_transforms[cuisine] = {}
 
             # Loop over each ingredient file in ./ingredients/
-            ingredient_directory = 'ingredients'
+            ingredient_directory = 'RecipeParser/ingredients'
             for filename in os.listdir(ingredient_directory):
                 if filename.endswith('.csv'):
                     df = self.load_csv(ingredient_directory + '/' + filename)
@@ -127,7 +127,7 @@ class ConfigManager:
 
         ingredient_set = set()
 
-        ingredient_directory = 'ingredients'
+        ingredient_directory = 'RecipeParser/ingredients'
         for filename in os.listdir(ingredient_directory):
             if filename.endswith('.csv'):
                 df = self.load_csv(ingredient_directory + '/' + filename)
@@ -146,7 +146,7 @@ class ConfigManager:
 
         ingredient_dict = {}
 
-        ingredient_directory = 'ingredients'
+        ingredient_directory = 'RecipeParser/ingredients'
         for filename in os.listdir(ingredient_directory):
             if filename.endswith('.csv'):
                 df = self.load_csv(ingredient_directory + '/' + filename)

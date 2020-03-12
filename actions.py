@@ -5,6 +5,7 @@
 # https://rasa.com/docs/rasa/core/actions/#custom-actions/
 
 from RecipeParser.InterfaceManager import InterfaceManager
+from RecipeParser import RecipeParser
 
 # This is a simple example for a custom action which utters "Hello World!"
 
@@ -13,7 +14,8 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
-interface = InterfaceManager()
+# TODO: Do this dynamically using user input.
+interface = InterfaceManager(current_recipe=RecipeParser.get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'), current_recipe_step=0)
 
 class ActionDisplayIngredients(Action):
 
@@ -23,8 +25,7 @@ class ActionDisplayIngredients(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        temp = interface.action_display_ingredient_list(current_recipe=get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
-        #print(temp)
+
         dispatcher.utter_message(text=interface.action_display_ingredient_list())
 
         return []

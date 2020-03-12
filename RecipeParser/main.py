@@ -1,5 +1,5 @@
-import InterfaceManager as im
-import ConfigManager as cm
+import RecipeParser.InterfaceManager as im
+import RecipeParser.ConfigManager as cm
 
 
 def main():
