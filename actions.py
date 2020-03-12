@@ -23,7 +23,8 @@ class ActionDisplayIngredients(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
+        temp = interface.action_display_ingredient_list(current_recipe=get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'))
+        #print(temp)
         dispatcher.utter_message(text=interface.action_display_ingredient_list())
 
         return []
