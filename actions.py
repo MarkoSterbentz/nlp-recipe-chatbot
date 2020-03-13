@@ -30,7 +30,7 @@ class ActionDisplayIngredients(Action):
 
         return []
 
-class ActionDisplayIngredients(Action):
+class ActionDisplaySteps(Action):
 
     def name(self) -> Text:
         return "action_display_step"
