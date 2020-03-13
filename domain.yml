@@ -1,7 +1,13 @@
 ---
 actions:
-  - action_display_all_steps
   - action_display_ingredients
+  - action_display_all_steps
+  - action_display_current_step
+  - action_get_recipe
+  - action_go_to_step
+  - action_answer_how_to
+  - action_answer_what_is
+
 intents:
   - greet
   - goodbye
@@ -11,6 +17,8 @@ intents:
   - go_to_step
   - how_to
   - what_is
+  - url
+
 responses:
   utter_goodbye:
     - text: "Bye"

@@ -21,7 +21,7 @@
 ## display ingredients
 > check_interaction_loop
 * display_step
-  -action_display_step
+  - action_display_all_steps
   - utter_prompt
 > check_interaction_loop
 
