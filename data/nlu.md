@@ -12,6 +12,16 @@
 - see you around
 - see you later
 
+## intent:affirm
+- yes
+- okay
+- go
+- sounds good
+- yeah
+
+## intent:url
+- url
+
 ## intent:display_ingredients
 - show ingredients
 - what are the ingredients

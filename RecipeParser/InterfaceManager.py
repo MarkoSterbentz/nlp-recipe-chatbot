@@ -1,5 +1,6 @@
 import RecipeParser.RecipeParser as rp
 import string
+import sys
 
 class InterfaceManager:
     '''
@@ -18,6 +19,7 @@ class InterfaceManager:
         '''
         The main loop that handles all user interaction with the user.
         :return: None
+        TODO: Delete this function since the interaction is all handled through Rasa.
         '''
 
         # Print an initial welcome message
@@ -61,7 +63,7 @@ class InterfaceManager:
         :param s: The string of user input.
         :return: The action to be taken based on the intent detected in the string, as well as the argument required for
         that action to be done properly.
-        TODO: This is (I think) where RASA will be deployed.
+        TODO: Delete this function, since the intent handling is done within Rasa.
         '''
         if s == 'quit':
             return 'terminate', None
@@ -94,66 +96,53 @@ class InterfaceManager:
     def action_get_recipe(self):
         '''
         Asks the user for a recipe URL from AllRecipes.com.
-        :return: Returns the recipe object, if it was a valid URL
+        :return: Returns Boolean denoting whether the recipe getting was a success or not.
         '''
 
-        while self.current_recipe is None:
-            url = input('Alrighty, give me a recipe from AllRecipes.com: ')
+        url = input('Alrighty, give me a recipe from AllRecipes.com: ')
 
-            # Initialize a Recipe object based on this recipe
-            self.current_recipe = rp.get_recipe(url)
+        # Initialize a Recipe object based on this recipe
+        self.current_recipe = rp.get_recipe(url)
 
-            if self.current_recipe is None:
-                print('Sorry, I wasn\'t able to find a recipe there.\n')
-
-            print('Sounds good! I was able to find a recipe for \'{}\'. What would you like to do?'.format(self.current_recipe.title))
-            print('[1] See the ingredient list or [2] View the steps?')
-            self.last_question = 'view_recipe'
-            self.waiting_for_answer = True
-            self.current_recipe_step = 0
-
+        if self.current_recipe is None:
+            return False
+        else:
+            return True
 
     def action_display_ingredient_list(self):
         '''
         Displays the ingredient list of the current recipe.
-        :return: None
+        :return: The ingredients string,.
         '''
-        return self.current_recipe.get_ingredients_string() + \
-            'There you go! Let me know how else I can help.'
+        return self.current_recipe.get_ingredients_string()
 
     def action_display_all_steps(self):
         '''
         Displays all of the cooking steps in the current recipe.
-        :return: None
-        Note: I'm not sure we'll ever use this.
+        :return: The cooking steps string.
         '''
-        print(self.current_recipe.get_cooking_steps_string())
-        print('There you go! Let me know how else I can help.')
-        self.waiting_for_answer = False
-        return
+        # self.waiting_for_answer = False
+        return self.current_recipe.get_cooking_steps_string()
 
     def action_display_current_step(self):
         '''
         Displays the cooking step the user is currently working on.
-        :return: None
+        :return: The string with the current cooking step.
         Note: Assumes that the values in self.current_recipe_step is within the appropriate range
         '''
         ret_val = ""
         if self.current_recipe_step is not None and 0 <= self.current_recipe_step < len(self.current_recipe.cooking_steps):
             ret_val += 'Step ' + str(self.current_recipe_step) + '. ' + str(self.current_recipe.cooking_steps[self.current_recipe_step]) + '\n'
-        ret_val += 'There you go! Let me know how else I can help.'
         return ret_val
 
-    def action_go_to_step(self, arg):
+    def action_go_to_step(self, n_arg):
         '''
         Displays the nth step of the current recipe, if it exists.
-        :param arg: The string containing the step to go to.
-        :return: None
+        :param n_arg: The string/int containing the step to go to.
+        :return: Boolean values saying whether the recipe state was updated properly.
         '''
-        # TODO: Determine what step the user is asking for based on the arg and the current_recipe_step
-        # TODO: This currently assumes that the navigational utterance is of the form 'go to step n'
         try:
-            n = int(arg)
+            n = int(n_arg)
 
             # Go to the proper cooking step
             if n < 0:
@@ -165,10 +154,27 @@ class InterfaceManager:
 
             # Display the current step
             self.action_display_current_step()
-        except:
-            print('Hmmm, I\'m not sure what step that is. Could you rephrase that?')
 
-        return
+            success = True
+        except:
+            success = False
+
+        return success
+
+    def action_go_to_first_step(self):
+        '''
+        Wrapper for the function action_got_step() that goes to the first step in the current recipe.
+        :return: Same as the return values for action_go_to_step().
+        '''
+        return self.action_go_to_step(0)
+
+    def action_go_to_last_step(self):
+        '''
+        Wrapper for the function action_go_to_step() that goes to the last possible step in the recipe.
+        :return: Same as the return values for action_go_to_step().
+        '''
+        return self.action_go_to_step(sys.maxsize)
+
 
     def action_answer_how_to(self, action):
         '''
@@ -180,8 +186,7 @@ class InterfaceManager:
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.youtube.com/results?search_query=how+'
         s += '+'.join(self.__remove_puncutation(action).split())
-        print(s)
-        return
+        return s
 
     def action_answer_what_is(self, thing):
         '''
@@ -193,49 +198,81 @@ class InterfaceManager:
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.google.com/search?q=what+is+'
         s += '+'.join(self.__remove_puncutation(thing).split())
-        print(s)
-        return
+        return s
 
     def action_transform_recipe(self, transformation):
         '''
         Updates the recipe with the provided transformation.
         :param transformation: A string denoting the type of transformation from Project 2.
         :return: None
+        Note: The transformation parameter is expected to have one of the following values:
+                - healthy
+                - unhealthy
+                - vegetarian
+                - non-vegetarian
+                - japanese
+                - mexican
+                - italian
+                - double
+                - half
         '''
-        # TODO: Implement this
-        return
+        # TODO: Should this print out the result of the transformation as in the last project?
+        # TODO: Should this print/do anything out if it doesn't recognize the provided transformation string?
+        if self.current_recipe is not None:
+            if transformation == 'healthy':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_healthy()
+            elif transformation == 'unhealthy':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_unhealthy()
+            elif transformation == 'vegetarian':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_vegetarian()
+            elif transformation == 'non-vegetarian':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_non_vegetarian()
+            elif transformation == 'japanese':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_cuisine('japan')
+            elif transformation == 'mexican':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_cuisine('mexico')
+            elif transformation == 'italian':
+                self.current_recipe, substitutions_performed = self.current_recipe.transform_cuisine('italy')
+            elif transformation == 'double':
+                self.current_recipe = self.current_recipe.transform_size(2.0)
+            elif transformation == 'half':
+                self.current_recipe = self.current_recipe.transform_size(0.5)
+        return None
 
-    def __print_transformation_options(self):
+    def action_get_transformation_options(self):
         '''
-        Display the transformation options on the command line.
-        :return: None
+        Builds a string containing the transformation options.
+        :return: A nicely formatted string containing the transformation options.
         '''
-        print('\n***************************************************************')
-        print('Recipe Transformation Options:\n')
-        print('[0]: Make recipe healthy')
-        print('[1]: Make recipe unhealthy')
-        print('[2]: Make recipe vegetarian')
-        print('[3]: Make recipe non-vegetarian')
-        print('[4]: Make recipe Japanese')
-        print('[5]: Make recipe Mexican')
-        print('[6]: Make recipe Italian')
-        print('[7]: Make recipe double portion')
-        print('[8]: Make recipe half portion')
-        print('[9]: End session')
-        print('***************************************************************\n')
-        return
+        s = ''
+        s += '\n***************************************************************\n'
+        s += 'Recipe Transformation Options:\n'
+        s += '[0]: Make recipe healthy\n'
+        s += '[1]: Make recipe unhealthy\n'
+        s += '[2]: Make recipe vegetarian\n'
+        s += '[3]: Make recipe non-vegetarian\n'
+        s += '[4]: Make recipe Japanese\n'
+        s += '[5]: Make recipe Mexican\n'
+        s += '[6]: Make recipe Italian\n'
+        s += '[7]: Make recipe double portion\n'
+        s += '[8]: Make recipe half portion\n'
+        s += '[9]: End session\n'
+        s += '***************************************************************\n'
+        return s
 
-    def __print_substitutions_performed(self, subs):
+    def action_get_substitutions_performed_string(self, subs):
         '''
-        Nicely prints out the substitution dictionary.
+        Builds a string out of the substitution dictionary.
         :param subs: A dictionary mapping the name of the original ingredient to the name of the new ingredient.
-        :return: None
+        :return: A nicely formatted string for displaying the substitutions performed.
         '''
-        print('\n***************************************************************')
-        print('SUBSTITUTIONS PERFORMED')
-        print('***************************************************************')
+        s = ''
+        s += '\n***************************************************************\n'
+        s += 'SUBSTITUTIONS PERFORMED\n'
+        s += '***************************************************************\n'
         for key, value in subs.items():
-            print(key + ' -> ' + value)
+            s += key + ' -> ' + value + '\n'
+        return s
 
     def __remove_puncutation(self, s):
         '''

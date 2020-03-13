@@ -5,6 +5,7 @@ actions:
 intents:
   - greet
   - goodbye
+  - affirm
   - display_ingredients
   - display_step
   - go_to_step
@@ -15,6 +16,10 @@ responses:
     - text: Bye
   utter_greet:
     - text: "Hi! I'm Remy! Are you ready to cook?"
+  utter_url_prompt:
+    - text: "Please provide the url for a recipe on allrecipes.com:"
+  utter_prompt:
+    - text: What would you like to do?
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60
