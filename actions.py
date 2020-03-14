@@ -94,7 +94,7 @@ class ActionGoToStep(Action):
         else:
             try:
                 num = int(step_number) - 1
-                success, step_text = interface.action_go_to_step(step_number)
+                success, step_text = interface.action_go_to_step(num)
             except:
                 success = False
                 step_text = None

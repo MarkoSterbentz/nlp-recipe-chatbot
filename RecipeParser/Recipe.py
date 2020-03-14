@@ -285,7 +285,7 @@ class Recipe:
         ret_val = ''
         ret_val += '\n***************************************************************\n'
         ret_val += 'COOKING STEPS:\n'
-        ret_val += '***************************************************************\n    - '
+        ret_val += '***************************************************************\n    '
         ret_val += '\n    '.join([str(num + 1) + '. ' + str(cooking_step) for num, cooking_step in enumerate(self.cooking_steps)]) + '\n'
         return ret_val
 
