@@ -3,6 +3,7 @@
   - utter_greet
   - utter_url_prompt
 * url
+  - action_get_recipe
   - utter_prompt
 > check_interaction_loop
 

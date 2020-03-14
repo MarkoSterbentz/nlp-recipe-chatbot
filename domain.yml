@@ -14,6 +14,7 @@ entities:
   - transformation_type
   - what_is_object
   - how_to_object
+  - website
 
 slots:
   step_number:
@@ -24,6 +25,8 @@ slots:
     type: list
   how_to_object:
     type: list
+  website:
+    type: text
 
 intents:
   - greet
