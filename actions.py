@@ -7,8 +7,6 @@
 from RecipeParser.InterfaceManager import InterfaceManager
 from RecipeParser import RecipeParser
 
-# This is a simple example for a custom action which utters "Hello World!"
-
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
@@ -87,6 +85,10 @@ class ActionGoToStep(Action):
 
         if step_number == 'first':
             success, step_text = interface.action_go_to_first_step()
+        elif step_number == 'next':
+            success, step_text = interface.action_go_to_step(interface.current_recipe_step + 1)
+        elif step_number == 'previous':
+            success, step_text = interface.action_go_to_step(interface.current_recipe_step - 1)
         elif step_number == 'last':
             success, step_text = interface.action_go_to_last_step()
         else:
@@ -107,7 +109,11 @@ class ActionAnswerHowTo(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text=interface.action_answer_how_to())
+        how_to_object = str(tracker.get_slot('how_to_object'))
+
+        # dispatcher.utter_message(text="found the following for the how_to_object: " + str(how_to_object))
+
+        dispatcher.utter_message(text=interface.action_answer_how_to(how_to_object))
 
         return []
 
@@ -121,6 +127,54 @@ class ActionAnswerWhatIs(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text=interface.action_answer_what_is())
+        what_is_object = str(tracker.get_slot('what_is_object'))
+
+        # dispatcher.utter_message(text= "found the following for the what_is_object: " + str(what_is_object))
+
+        dispatcher.utter_message(text=interface.action_answer_what_is(what_is_object))
+
+        return []
+
+class ActionTransformRecipe(Action):
+
+    def name(self) -> Text:
+        return "action_transform_recipe"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Retrive the Rasa slot with the proper information
+        transformation_type = str(tracker.get_slot('transformation_type'))
+
+        healthy_alts = ['healthy', 'nutritious', 'healthier', 'better']
+        unhealthy_alts = ['unhealthy', 'non-nutritious', 'bad']
+        vegetarian_alts = ['vegetarian', 'veggie']
+        nonvegetarian_alts = ['nonvegetarian', 'non-vegetarian', 'carnivore', 'carnivorous']
+        mexican_alts = ['mexican', 'mexico']
+        italian_alts = ['italy', 'italian']
+        japanese_alts = ['japan', 'japanese']
+        double_alts = ['double', 'more', 'big', 'bigger']
+        half_alts = ['half', 'less', 'small', 'smaller']
+
+        if transformation_type is not None:
+            if transformation_type in healthy_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('healthy'))
+            elif transformation_type in unhealthy_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('unhealthy'))
+            elif transformation_type in vegetarian_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('vegetarian'))
+            elif transformation_type in nonvegetarian_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('non-vegetarian'))
+            elif transformation_type in italian_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('italian'))
+            elif transformation_type in mexican_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('mexican'))
+            elif transformation_type in japanese_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('japanese'))
+            elif transformation_type in double_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('double'))
+            elif transformation_type in half_alts:
+                dispatcher.utter_message(text=interface.action_transform_recipe('half'))
 
         return []

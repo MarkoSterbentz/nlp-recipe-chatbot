@@ -152,7 +152,7 @@ class InterfaceManager:
             else:
                 self.current_recipe_step = n
 
-            # Display the current step
+            # # Display the current step
             step_text = self.action_display_current_step()
 
             success = True
@@ -176,6 +176,13 @@ class InterfaceManager:
         '''
         return self.action_go_to_step(sys.maxsize)
 
+    def action_go_to_next_step(self):
+        '''
+        Wrapper for the function action_go_to_step() that goes to the next possible step in the recipe.
+        :return: Same as the return values for action_go_to_step().
+        '''
+        n = min(self.current_recipe_step + 1, len(self.current_recipe.cooking_steps) - 1)
+        return self.action_go_to_step(n)
 
     def action_answer_how_to(self, action):
         '''
@@ -185,7 +192,7 @@ class InterfaceManager:
         :return: None
         '''
         s = 'That\'s a good question! Here are some results I found for that: '
-        s += 'https://www.youtube.com/results?search_query=how+'
+        s += 'https://www.youtube.com/results?search_query=how+to+'
         s += '+'.join(self.__remove_punctuation(action).split())
         return s
 

@@ -7,13 +7,23 @@ actions:
   - action_go_to_step
   - action_answer_how_to
   - action_answer_what_is
+  - action_transform_recipe
 
 entities:
   - step_number
+  - transformation_type
+  - what_is_object
+  - how_to_object
 
 slots:
   step_number:
     type: text
+  transformation_type:
+    type: text
+  what_is_object:
+    type: list
+  how_to_object:
+    type: list
 
 intents:
   - greet
@@ -26,10 +36,11 @@ intents:
   - how_to
   - what_is
   - url
+  - transform_recipe
 
 responses:
   utter_goodbye:
-    - text: "Bye"
+    - text: "Goodbye! Thanks for talking with me! Enjoy your tasty meal!"
   utter_greet:
     - text: "Hi! I'm Remy! Are you ready to cook?"
   utter_url_prompt:
