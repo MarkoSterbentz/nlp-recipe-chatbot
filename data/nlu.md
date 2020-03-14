@@ -23,6 +23,9 @@
 - c ya
 - byebye
 - buh bye
+- exit
+- quit
+- stop
 
 ## intent:affirm
 - yes
@@ -38,8 +41,14 @@
 - cool
 
 ## intent:url
-- url
-- website
+- [https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/](website)
+- [https://www.allrecipes.com/recipe/270310/instant-pot-italian-wedding-soup/?internalSource=previously%20viewed&referringContentType=Homepage](website)
+- [https://www.allrecipes.com/recipe/278776/garlic-parmesan-shrimp/?internalSource=rotd&referringContentType=Homepage&clickId=cardslot%201](website)
+- [https://www.allrecipes.com/recipe/132358/easy-garlic-lemon-scallops/?internalSource=previously%20viewed&referringContentType=Homepage&clickId=cardslot%204](website)
+- [https://www.allrecipes.com/recipe/269230/sheet-pan-smoked-sausage-apple-and-root-veggie-dinner/?internalSource=previously%20viewed&referringContentType=Homepage&clickId=cardslot%2034](website)
+
+## regex:website
+- \S+allrecipes\.com\/recipe\/d+\/\S+
 
 ## intent:display_ingredients
 - show ingredients
@@ -48,7 +57,7 @@
 - display the ingredients
 - what's in this
 - what is in this
-- what's this made out of 
+- what's this made out of
 - what is this made out of
 
 ## intent:display_all_steps
@@ -107,7 +116,7 @@
 - how to [dice](how_to_object)
 - how to [preheat the oven](how_to_object)
 - how to [do that](how_to_object)
-- how should I do [do that](how_to_object)  
+- how should I do [do that](how_to_object)
 
 ## intent:what_is
 - what is [that](what_is_object)
@@ -124,6 +133,7 @@
 - what is that [thing](what_is_object)
 - what is a [chicken](what_is_object)
 - what is an [oven](what_is_object) 
+- what is a [chicken](what_is_object)
 - i don't know what [this](what_is_object) is
 - i don't know what [that](what_is_object) is
 - i don't know what an [oven](what_is_object) is
@@ -138,7 +148,7 @@
 - make this [mexican](transformation_type)
 - make this more [mexican](transformation_type)
 - can we make this [mexican](transformation_type)
-- make this more [mexican](transformation_type) 
+- make this more [mexican](transformation_type)
 - make this [bigger](transformation_type)
 - make this [smaller](transformation_type)
 - make this [small](transformation_type)

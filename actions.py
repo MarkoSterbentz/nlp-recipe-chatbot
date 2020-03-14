@@ -12,8 +12,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
-# TODO: Do this dynamically using user input.
-interface = InterfaceManager(current_recipe=RecipeParser.get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'), current_recipe_step=0)
+interface = InterfaceManager()
 
 
 class ActionDisplayIngredients(Action):
@@ -67,7 +66,8 @@ class ActionGetRecipe(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        success = interface.action_get_recipe(tracker.latest_message.text)
+        website_url = str(tracker.get_slot('website'))
+        success = interface.action_get_recipe(website_url)
 
         return []
 
@@ -92,7 +92,12 @@ class ActionGoToStep(Action):
         elif step_number == 'last':
             success, step_text = interface.action_go_to_last_step()
         else:
-            success, step_text = interface.action_go_to_step(step_number)
+            try:
+                num = int(step_number) - 1
+                success, step_text = interface.action_go_to_step(num)
+            except:
+                success = False
+                step_text = None
 
         if success:
             dispatcher.utter_message(text=step_text)
@@ -198,3 +203,4 @@ class ActionTransformRecipe(Action):
                     dispatcher.utter_message(text=results)
 
         return []
+

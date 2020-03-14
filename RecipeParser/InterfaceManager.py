@@ -132,22 +132,20 @@ class InterfaceManager:
         '''
         ret_val = ""
         if self.current_recipe_step is not None and 0 <= self.current_recipe_step < len(self.current_recipe.cooking_steps):
-            ret_val += 'Step ' + str(self.current_recipe_step) + '. ' + str(self.current_recipe.cooking_steps[self.current_recipe_step]) + '\n'
+            ret_val += 'Step ' + str(self.current_recipe_step + 1) + '. ' + str(self.current_recipe.cooking_steps[self.current_recipe_step]) + '\n'
         return ret_val
 
-    def action_go_to_step(self, n_arg):
+    def action_go_to_step(self, n):
         '''
         Displays the nth step of the current recipe, if it exists.
-        :param n_arg: The string/int containing the step to go to.
+        :param n: The int containing the step to go to.
         :return: Boolean values saying whether the recipe state was updated properly.
         '''
         try:
-            n = int(n_arg)
-
             # Go to the proper cooking step
             if n < 0:
                 self.current_recipe_step = 0
-            elif n > len(self.current_recipe.cooking_steps):
+            elif n > len(self.current_recipe.cooking_steps) - 1:
                 self.current_recipe_step = len(self.current_recipe.cooking_steps) - 1
             else:
                 self.current_recipe_step = n
