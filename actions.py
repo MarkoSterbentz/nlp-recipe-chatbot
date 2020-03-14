@@ -152,6 +152,8 @@ class ActionTransformRecipe(Action):
         # Retrive the Rasa slot with the proper information
         transformation_type = str(tracker.get_slot('transformation_type'))
 
+        dispatcher.utter_message(text="found the following for the transformation_type: " + str(transformation_type))
+
         healthy_alts = ['healthy', 'nutritious', 'healthier', 'better']
         unhealthy_alts = ['unhealthy', 'non-nutritious', 'bad']
         vegetarian_alts = ['vegetarian', 'veggie']
@@ -164,23 +166,41 @@ class ActionTransformRecipe(Action):
 
         if transformation_type is not None:
             if transformation_type in healthy_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('healthy'))
+                results = interface.action_transform_recipe('healthy')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in unhealthy_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('unhealthy'))
+                results = interface.action_transform_recipe('unhealthy')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in vegetarian_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('vegetarian'))
+                results = interface.action_transform_recipe('vegetarian')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in nonvegetarian_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('non-vegetarian'))
+                results = interface.action_transform_recipe('non-vegetarian')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in italian_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('italian'))
+                results = interface.action_transform_recipe('italian')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in mexican_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('mexican'))
+                results = interface.action_transform_recipe('mexican')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in japanese_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('japanese'))
+                results = interface.action_transform_recipe('japanese')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in double_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('double'))
+                results = interface.action_transform_recipe('double')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
             elif transformation_type in half_alts:
-                dispatcher.utter_message(text=interface.action_transform_recipe('half'))
+                results = interface.action_transform_recipe('half')
+                if results is not None:
+                    dispatcher.utter_message(text=results)
 
         return []
 
