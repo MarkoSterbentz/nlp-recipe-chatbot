@@ -186,7 +186,7 @@ class InterfaceManager:
         '''
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.youtube.com/results?search_query=how+'
-        s += '+'.join(self.__remove_puncutation(action).split())
+        s += '+'.join(self.__remove_punctuation(action).split())
         return s
 
     def action_answer_what_is(self, thing):
@@ -198,7 +198,7 @@ class InterfaceManager:
         '''
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.google.com/search?q=what+is+'
-        s += '+'.join(self.__remove_puncutation(thing).split())
+        s += '+'.join(self.__remove_punctuation(thing).split())
         return s
 
     def action_transform_recipe(self, transformation):
@@ -275,7 +275,7 @@ class InterfaceManager:
             s += key + ' -> ' + value + '\n'
         return s
 
-    def __remove_puncutation(self, s):
+    def __remove_punctuation(self, s):
         '''
         Remove all punctuation from the given string.
         :param s: The original string.

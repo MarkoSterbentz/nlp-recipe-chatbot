@@ -17,6 +17,7 @@ from rasa_sdk.executor import CollectingDispatcher
 # TODO: Do this dynamically using user input.
 interface = InterfaceManager(current_recipe=RecipeParser.get_recipe('https://www.allrecipes.com/recipe/218091/classic-and-simple-meat-lasagna/'), current_recipe_step=0)
 
+
 class ActionDisplayIngredients(Action):
 
     def name(self) -> Text:
@@ -29,6 +30,7 @@ class ActionDisplayIngredients(Action):
         dispatcher.utter_message(text=interface.action_display_ingredient_list())
 
         return []
+
 
 class ActionDisplayAllSteps(Action):
 
@@ -43,6 +45,7 @@ class ActionDisplayAllSteps(Action):
 
         return []
 
+
 class ActionDisplayCurrentStep(Action):
 
     def name(self) -> Text:
@@ -55,6 +58,7 @@ class ActionDisplayCurrentStep(Action):
         dispatcher.utter_message(text=interface.action_display_current_step())
 
         return []
+
 
 class ActionGetRecipe(Action):
 
@@ -69,6 +73,7 @@ class ActionGetRecipe(Action):
 
         return []
 
+
 class ActionGoToStep(Action):
 
     def name(self) -> Text:
@@ -78,7 +83,8 @@ class ActionGoToStep(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        step_number = tracker.get_slot('step_number')
+        step_number = str(tracker.get_slot('step_number'))
+
         if step_number == 'first':
             success, step_text = interface.action_go_to_first_step()
         elif step_number == 'last':
@@ -90,6 +96,7 @@ class ActionGoToStep(Action):
             dispatcher.utter_message(text=step_text)
 
         return []
+
 
 class ActionAnswerHowTo(Action):
 
@@ -103,6 +110,7 @@ class ActionAnswerHowTo(Action):
         dispatcher.utter_message(text=interface.action_answer_how_to())
 
         return []
+
 
 class ActionAnswerWhatIs(Action):
 
