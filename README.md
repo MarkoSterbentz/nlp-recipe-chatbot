@@ -1,10 +1,10 @@
 # CS 337 - Remy: A Conversational Recipe Chatbot
 
-This project aims to provide a conversational interface for interacting with the recipe transformer. We utilize the 
-[Rasa](https://rasa.com/) contextual AI assistant framework to handle user input, determine their intent, and 
-carry out the proper actions when interacting with our recipe transformer. Additionally, we were able to integrate 
-this code with [Slack](https://slack.com) in order for the user to be able to interact with this agent in 
-a Slack workspace. 
+This project aims to provide a conversational interface for interacting with the recipe transformer. We utilize the
+[Rasa](https://rasa.com/) contextual AI assistant framework to handle user input, determine their intent, and
+carry out the proper actions when interacting with our recipe transformer. Additionally, we were able to integrate
+this code with [Slack](https://slack.com) in order for the user to be able to interact with this agent in
+a Slack workspace.
 
 Team Members (Group 4): Cameron Barrie, Alexander Reneau, Marko Sterbentz
 
@@ -25,7 +25,7 @@ The repository for this project can be found on GitHub: https://github.com/Marko
 
 ## Installation
 
-*Note: The following installation instructions were tested on MacOS 10.14, and assumes that Anaconda is installed. This 
+*Note: The following installation instructions were tested on MacOS 10.14, and assumes that Anaconda is installed. This
 is primarily needed if you are having difficulties installing Rasa or any of the packages within an existing environment.*
 
 ### Setting up Rasa
@@ -49,12 +49,12 @@ Install rasa:
 
 `pip install rasa`
 
-Alternatively, you can also run `pip install -r requirements` (instead of installing Rasa on its own) in the 
+Alternatively, you can also run `pip install -r requirements` (instead of installing Rasa on its own) in the
 base project directory to install everything that is required for this project, including Rasa.
 
 
 ## Running the Terminal Version of the Project
-This project assumes the use of Python 3.7. From the base project directory, make sure you have the proper virtual 
+This project assumes the use of Python 3.7. From the base project directory, make sure you have the proper virtual
 environment activated and run the following command to start the Rasa action server:
 
 `rasa run actions`
@@ -70,11 +70,11 @@ Once it is done training a model, run the following command in the same terminal
 ## Connecting the Project to Slack
 
 *Note: We primarily followed
-[this tutorial](https://xlog.x-hub.io/build-your-chatbot-with-rasa-and-slack-from-training-to-deploying/) 
-when connecting our agent to a Slack workspace. Please follow the instructions there to properly configure your 
-workspace and allow for interaction with Remy.* 
+[this tutorial](https://xlog.x-hub.io/build-your-chatbot-with-rasa-and-slack-from-training-to-deploying/)
+when connecting our agent to a Slack workspace. Please follow the instructions there to properly configure your
+workspace and allow for interaction with Remy.*
 
-Once you've finished configuring the Slack workspace following the instructions at the link above and have ngrok 
+Once you've finished configuring the Slack workspace following the instructions at the link above and have ngrok
 installed, run the following command:
 
 `rasa run actions`
@@ -87,12 +87,12 @@ Finally, in yet another terminal window, run the following command to start Remy
 
 `rasa run --port 5002 --connector slack --credentials slack_credentials.yml --endpoints endpoints.yml`
 
-Lastly, go back to the app settings for Remy (go to `https://api.slack.com/apps/` and click on Remy), click on 
-Event Subscriptions on the left sidebar, and input the updated ngrok url (it should look something like 
+Lastly, go back to the app settings for Remy (go to `https://api.slack.com/apps/` and click on Remy), click on
+Event Subscriptions on the left sidebar, and input the updated ngrok url (it should look something like
 `http://97f49c33.ngrok.io/webhooks/slack/webhook`).
 
-With all of this done, reload the Slack workspace. Then, you should be able to click on Remy in the left sidebar, 
-click on the Messages tab,and start talking to Remy about recipes. An example of this interaction is shown 
+With all of this done, reload the Slack workspace. Then, you should be able to click on Remy in the left sidebar,
+click on the Messages tab,and start talking to Remy about recipes. An example of this interaction is shown
 in the screenshot below:
 
 ![Example of an interaction with Remy on Slack](img/remy_interaction_example.png)
@@ -102,8 +102,8 @@ in the screenshot below:
 This project builds off of the [previous course project](https://github.com/MarkoSterbentz/nlp-recipe-transformer) in order to
 provide a nice conversational interface for working one's way through a recipe. We utilized Rasa for parsing in input
 from the user, as well as extracting intent from their statements. These intents are then mapped to user interaction
-stories, which can be found in `stories.md`. Rasa's NLU module predicts where the story is going in order to the 
-appropriate prompts/output and carry out the required actions for the user.
+stories, which can be found in `stories.md`. Rasa's NLU module evaluates the user's input to predict where the interaction
+is going, and uses this prediction to provide the appropriate prompts/output and to carry out the required actions for the user.
 
 The full domain for this conversational agent can be found in `domain.yml`.
 
@@ -118,6 +118,6 @@ Once Remy is running, it can be instructed to perform a variety of actions:
 - Provide links to web searches for 'what is' questions
 
 ## Current Shortcomings
-Currently, the parsing and language understanding present in our model is not very good. This is due to 
+Currently, the parsing and language understanding present in our model is not very good. This is due to
 **insufficient NLU training examples**. We plan to expand the training examples within `nlu.md` in order for Remy to
 be able to handle a wider variety of user input.
