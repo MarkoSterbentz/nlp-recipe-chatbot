@@ -1,25 +1,41 @@
 ---
 actions:
-  - action_display_step
   - action_display_ingredients
+  - action_display_all_steps
+  - action_display_current_step
+  - action_get_recipe
+  - action_go_to_step
+  - action_answer_how_to
+  - action_answer_what_is
+
+entities:
+  - step_number
+
+slots:
+  step_number:
+    type: text
+
 intents:
   - greet
   - goodbye
   - affirm
   - display_ingredients
-  - display_step
+  - display_all_steps
+  - display_current_step
   - go_to_step
   - how_to
   - what_is
+  - url
+
 responses:
   utter_goodbye:
-    - text: Bye
+    - text: "Bye"
   utter_greet:
     - text: "Hi! I'm Remy! Are you ready to cook?"
   utter_url_prompt:
     - text: "Please provide the url for a recipe on allrecipes.com:"
   utter_prompt:
-    - text: What would you like to do?
+    - text: "What would you like to do?"
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60

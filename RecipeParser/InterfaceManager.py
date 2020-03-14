@@ -93,13 +93,13 @@ class InterfaceManager:
         else:
             return None, None
 
-    def action_get_recipe(self):
+    def action_get_recipe(self, url):
         '''
         Asks the user for a recipe URL from AllRecipes.com.
         :return: Returns Boolean denoting whether the recipe getting was a success or not.
         '''
 
-        url = input('Alrighty, give me a recipe from AllRecipes.com: ')
+        # url = input('Alrighty, give me a recipe from AllRecipes.com: ')
 
         # Initialize a Recipe object based on this recipe
         self.current_recipe = rp.get_recipe(url)
@@ -153,13 +153,14 @@ class InterfaceManager:
                 self.current_recipe_step = n
 
             # Display the current step
-            self.action_display_current_step()
+            step_text = self.action_display_current_step()
 
             success = True
         except:
             success = False
+            step_text = None
 
-        return success
+        return success, step_text
 
     def action_go_to_first_step(self):
         '''
@@ -185,7 +186,7 @@ class InterfaceManager:
         '''
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.youtube.com/results?search_query=how+'
-        s += '+'.join(self.__remove_puncutation(action).split())
+        s += '+'.join(self.__remove_punctuation(action).split())
         return s
 
     def action_answer_what_is(self, thing):
@@ -197,7 +198,7 @@ class InterfaceManager:
         '''
         s = 'That\'s a good question! Here are some results I found for that: '
         s += 'https://www.google.com/search?q=what+is+'
-        s += '+'.join(self.__remove_puncutation(thing).split())
+        s += '+'.join(self.__remove_punctuation(thing).split())
         return s
 
     def action_transform_recipe(self, transformation):
@@ -274,7 +275,7 @@ class InterfaceManager:
             s += key + ' -> ' + value + '\n'
         return s
 
-    def __remove_puncutation(self, s):
+    def __remove_punctuation(self, s):
         '''
         Remove all punctuation from the given string.
         :param s: The original string.
