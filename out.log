@@ -1,0 +1,40 @@
+2020-03-14 00:52:18,725 [DEBUG]  Available web server routes: 
+/conversations/<conversation_id>/messages          POST                           add_message
+/conversations/<conversation_id>/tracker/events    POST                           append_events
+/model/test/intents                                POST                           evaluate_intents
+/model/test/stories                                POST                           evaluate_stories
+/conversations/<conversation_id>/execute           POST                           execute_action
+/domain                                            GET                            get_domain
+/                                                  GET                            hello
+/model                                             PUT                            load_model
+/model/parse                                       POST                           parse
+/conversations/<conversation_id>/predict           POST                           predict
+/conversations/<conversation_id>/tracker/events    PUT                            replace_events
+/conversations/<conversation_id>/story             GET                            retrieve_story
+/conversations/<conversation_id>/tracker           GET                            retrieve_tracker
+/webhooks/slack                                    GET                            slack_webhook.health
+/webhooks/slack/webhook                            POST                           slack_webhook.webhook
+/status                                            GET                            status
+/model/predict                                     POST                           tracker_predict
+/model/train                                       POST                           train
+/conversations/<conversation_id>/trigger_intent    POST                           trigger_intent
+/model                                             DELETE                         unload_model
+/version                                           GET                            version
+2020-03-14 00:52:18,726 [INFO ]  Starting Rasa server on http://localhost:5002
+2020-03-14 00:52:18,726 [DEBUG]  Using the default number of Sanic workers (1).
+2020-03-14 00:52:18,727 [INFO ]  Enabling coroutine debugging. Loop id 5372907552.
+2020-03-14 00:52:19,060 [DEBUG]  Extracted model to '/var/folders/lc/t24zygr55x322zl7v01hnzvc0000gn/T/tmpfmdts3kp'.
+2020-03-14 00:52:19,347 [DEBUG]  Loading the model ...
+2020-03-14 00:52:20,157 [DEBUG]  Finished loading the model.
+2020-03-14 00:52:20,157 [DEBUG]  Building tensorflow prediction graph...
+2020-03-14 00:52:24,918 [DEBUG]  Finished building tensorflow prediction graph.
+2020-03-14 00:52:24,919 [DEBUG]  Failed to load model. Maybe the path '/var/folders/lc/t24zygr55x322zl7v01hnzvc0000gn/T/tmpfmdts3kp/nlu' doesn't exist?
+2020-03-14 00:52:24,925 [DEBUG]  Connected to InMemoryTrackerStore.
+2020-03-14 00:52:24,925 [DEBUG]  Connected to lock store 'InMemoryLockStore'.
+2020-03-14 00:52:25,230 [DEBUG]  Extracted model to '/var/folders/lc/t24zygr55x322zl7v01hnzvc0000gn/T/tmp4bzexklp'.
+2020-03-14 00:52:25,233 [DEBUG]  Using yaml library: /opt/anaconda3/envs/rasa_env/lib/python3.7/site-packages/ruamel/yaml/__init__.py
+2020-03-14 00:52:25,284 [DEBUG]  Loading the model ...
+2020-03-14 00:52:25,517 [DEBUG]  Finished loading the model.
+2020-03-14 00:52:25,518 [DEBUG]  Building tensorflow prediction graph...
+2020-03-14 00:52:26,346 [DEBUG]  Finished building tensorflow prediction graph.
+2020-03-14 00:52:26,356 [DEBUG]  Instantiated NLG to 'TemplatedNaturalLanguageGenerator'.

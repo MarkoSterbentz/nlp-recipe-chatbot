@@ -123,9 +123,10 @@
 - what is [beef](what_is_object)
 - what is that [thing](what_is_object)
 - what is a [chicken](what_is_object)
-- what is a [chicken](what_is_object) 
+- what is an [oven](what_is_object) 
 - i don't know what [this](what_is_object) is
 - i don't know what [that](what_is_object) is
+- i don't know what an [oven](what_is_object) is
 - i don't know what a [thing](what_is_object) is
 - i don't know what a [hot dog](what_is_object) is
 - i do not know what a [hot dog](what_is_object) is
