@@ -136,5 +136,12 @@
 - transform to [italian](transformation_type)
 - make this [mexican](transformation_type)
 - make this more [mexican](transformation_type)
-- can we make this [mexican](transformation_type) 
+- can we make this [mexican](transformation_type)
+- make this more [mexican](transformation_type) 
+- make this [bigger](transformation_type)
+- make this [smaller](transformation_type)
+- make this [small](transformation_type)
+- make this [big](transformation_type)
+- [double](transformation_type) the portions
+- [half](transformation_type) the portions
 

@@ -226,6 +226,7 @@ class InterfaceManager:
         '''
         # TODO: Should this print out the result of the transformation as in the last project?
         # TODO: Should this print/do anything out if it doesn't recognize the provided transformation string?
+        substitutions_performed = None
         if self.current_recipe is not None:
             if transformation == 'healthy':
                 self.current_recipe, substitutions_performed = self.current_recipe.transform_healthy()
@@ -245,7 +246,7 @@ class InterfaceManager:
                 self.current_recipe = self.current_recipe.transform_size(2.0)
             elif transformation == 'half':
                 self.current_recipe = self.current_recipe.transform_size(0.5)
-        return None
+        return self.action_get_substitutions_performed_string(substitutions_performed)
 
     def action_get_transformation_options(self):
         '''
@@ -274,13 +275,16 @@ class InterfaceManager:
         :param subs: A dictionary mapping the name of the original ingredient to the name of the new ingredient.
         :return: A nicely formatted string for displaying the substitutions performed.
         '''
-        s = ''
-        s += '\n***************************************************************\n'
-        s += 'SUBSTITUTIONS PERFORMED\n'
-        s += '***************************************************************\n'
-        for key, value in subs.items():
-            s += key + ' -> ' + value + '\n'
-        return s
+        if subs is not None:
+            s = ''
+            s += '\n***************************************************************\n'
+            s += 'SUBSTITUTIONS PERFORMED\n'
+            s += '***************************************************************\n'
+            for key, value in subs.items():
+                s += key + ' -> ' + value + '\n'
+            return s
+        else:
+            return None
 
     def __remove_punctuation(self, s):
         '''
