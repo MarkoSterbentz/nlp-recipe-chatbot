@@ -11,17 +11,15 @@ Team Members (Group 4): Cameron Barrie, Alexander Reneau, Marko Sterbentz
 The repository for this project can be found on GitHub: https://github.com/MarkoSterbentz/nlp-recipe-chatbot
 
 ## Required Packages
-- Rasa
+- [Rasa](https://rasa.com/)
   - Installation `pip install rasa`
-- Pandas (for data containers)
+- [Pandas](https://pandas.pydata.org/) (for data containers)
   - Installation: with `pip install pandas`
-  - Webpage: https://pandas.pydata.org/
-- Spacy (for general NLP tasks)
+- [Spacy](https://spacy.io/) (for general NLP tasks)
   - Installation: `pip install -U spacy`
   - We use the `en_core_web_sm` model, which can be installed with `python -m spacy download en_core_web_sm` after installing Spacy.
-- BeautifulSoup (for web scraping)
+- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) (for web scraping)
   - Installation: `pip install beautifulsoup4`
-  - Webpage: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
 *Note: A full list of all packages installed can be found in requirements.txt.*
 
@@ -97,16 +95,29 @@ With all of this done, reload the Slack workspace. Then, you should be able to c
 click on the Messages tab,and start talking to Remy about recipes. An example of this interaction is shown 
 in the screenshot below:
 
-TODO: INSERT SCREENSHOT OF SLACK CHANNEL WORKING WITH REMY
+![Example of an interaction with Remy on Slack](img/remy_interaction_example.png)
 
 ## How it Works
-To be determined...
 
-TODO: How does Rasa work at a high level
-TODO: What actions can Remy perform
+This project builds off of the [previous course project](https://github.com/MarkoSterbentz/nlp-recipe-transformer) in order to
+provide a nice conversational interface for working one's way through a recipe. We utilized Rasa for parsing in input
+from the user, as well as extracting intent from their statements. These intents are then mapped to user interaction
+stories, which can be found in `stories.md`. Rasa's NLU module predicts where the story is going in order to the 
+appropriate prompts/output and carry out the required actions for the user.
+
+The full domain for this conversational agent can be found in `domain.yml`.
+
+Once Remy is running, it can be instructed to perform a variety of actions:
+
+- Retrieve and parse a recipe from AllRecipes.com
+- Display the ingredients of the recipe
+- Display all of the cookings steps in the recipe
+- Display the current cooking step in the recipe
+- Go to a specific cooking step in the recipe
+- Provide links to video answers for 'how to' questions
+- Provide links to web searches for 'what is' questions
 
 ## Current Shortcomings
 Currently, the parsing and language understanding present in our model is not very good. This is due to 
 **insufficient NLU training examples**. We plan to expand the training examples within `nlu.md` in order for Remy to
 be able to handle a wider variety of user input.
-
